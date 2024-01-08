@@ -1,13 +1,20 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
+dotenv.config();
+const url = process.env.URL;
 
-
-const url = process.env.URL || 'mongodb+srv://atul:pandey@cluster0.zj1ebd2.mongodb.net/Assignment?retryWrites=true&w=majority';
 const databaseConnect = async () => {
   try {
+    if (!url) {
+      throw new Error("MongoDB URL is not provided");
+    }
+
     await mongoose.connect(url);
-    console.log("database connected");
+
+    console.log("Database connected");
   } catch (error) {
-    console.log(error);
+    console.error("Connection to MongoDB failed:", error.message);
+    process.exit(1); // Exit process with failure
   }
 };
 
