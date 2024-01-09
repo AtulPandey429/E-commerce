@@ -3,9 +3,12 @@ const app = express();
 import databaseConnect from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 databaseConnect();
-
+app.use(express.json());
 // routes
-app.use("api/v1/auth", authRoutes);
+app.get("/yes", (req, res) => {
+  res.send("hello");
+});
+app.use("/api/v1/auth", authRoutes);
 
 const port = process.env.PORT || 5050;
 app.listen(port, () => {
