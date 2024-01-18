@@ -55,7 +55,6 @@ export const loginUser = async (req, res) => {
     if (!existingUser) {
       return res.status(404).send({
         message: "invalid email",
-        
       });
     }
     const matchPassword = await comparePassword(
@@ -65,7 +64,6 @@ export const loginUser = async (req, res) => {
     if (!matchPassword) {
       return res.status(200).send({
         message: "invalid password",
-      
       });
     }
 
@@ -77,6 +75,8 @@ export const loginUser = async (req, res) => {
       { expiresIn: "7d" }
     );
     res.status(200).send({
+      success: true,
+      message: "login success",
       user: {
         name: existingUser.name,
         email: existingUser.email,
