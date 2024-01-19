@@ -1,16 +1,18 @@
 import React from 'react'
-import Header from './Header'
+
 import Footer from './Footer'
+import Navbar from './Navbar';
 
 const Layout = (props) => {
   return (
     <div>
-        <Header/>
-        <main>
+      <Navbar/>
+        
+        <main style={{"height":"80vh"}}>
     {props.children}
 
         </main>
-        <Footer />
+        <Footer/>
     </div>
   )
 }

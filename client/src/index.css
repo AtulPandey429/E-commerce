@@ -1,5 +1,48 @@
-*{
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Roboto:wght@100;300;400;700;900&family=Ubuntu:wght@300;400;700&display=swap');
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.navbar {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  line-height: 26px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 6px -6px rgb(81, 139, 179);
+  border-bottom: 0.5px solid grey !important;
+}
+.nav-link {
+  font-weight: 500 !important;
+  
+}
+.nav-link.active {
+  border-bottom: 0.5px solid black;
+
+}
+.navbar-brand{
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+  letter-spacing: 3px;
+}
+.footer{
+  text-align: center;
+  font-family: 'Poppins',sans-serif;
+  font-weight: 300;
+ 
+}
+
+.footer a{
+  text-decoration: none;
+  color:white;
+  letter-spacing: 2px;
+  padding: 10px;
+}
+.footer a:hover{
+  color:rgb(169, 211, 102);
+  border-bottom: 1px solid white;
 }
