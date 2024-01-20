@@ -2,6 +2,7 @@ import React from 'react'
 
 import Footer from './Footer'
 import Navbar from './Navbar';
+import {Toaster} from "react-hot-toast"
 import {Helmet } from "react-helmet"
 const Layout = ({children,title,description,keywords,author}) => {
   return (
@@ -17,7 +18,7 @@ const Layout = ({children,title,description,keywords,author}) => {
         
         <main style={{"height":"80vh"}}>
     {children}
-
+  <Toaster/>
         </main>
         <Footer/>
     </div>
