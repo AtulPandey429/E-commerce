@@ -1,55 +1,45 @@
-// Import necessary libraries and components
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { React, useState } from "react";
 import Layout from "../../components/layout/Layout";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
-// Define the Register component
+import axios from "axios";
 const Register = () => {
-  // State variables for form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
-
-  // Access the navigate function from React Router
   const navigate = useNavigate();
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      // Make a POST request to the registration endpoint
-      const res = await axios.post(
+      const response = await axios.post(
         "http://localhost:7070/api/v1/auth/register",
         { name, email, password, address, mobile }
       );
 
-      // Check the response and take appropriate action
-      if (res.data.success) {
-        navigate("/login"); // Navigate to login page on success
-        toast.success("successfully created"); // Display success toast
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/login");
       } else {
-        toast.error(res.data.message); // Display error toast
+        // Handle specific error cases based on response.data.error
+        toast.error(response.data.error || "Registration failed");
       }
     } catch (error) {
-      console.error(error); // Log the error for debugging
       toast.error("An unexpected error occurred. Please try again later.");
+      console.error(error); // Log for debugging
     }
   };
 
-  // Return the JSX for the Register component
   return (
     <Layout title={"Register"}>
-      {/* Layout wrapper */}
       <div className="register">
-        {/* Registration form */}
         <form onSubmit={handleSubmit}>
-          <h2 className="text-center">Register</h2>
-
-          {/* Name input */}
+          <h2 className="text-center ">Register</h2>
           <div className="mb-3">
             <input
               required
@@ -60,8 +50,6 @@ const Register = () => {
               value={name}
             />
           </div>
-
-          {/* Email input */}
           <div className="mb-3">
             <input
               required
@@ -72,8 +60,6 @@ const Register = () => {
               value={email}
             />
           </div>
-
-          {/* Password input */}
           <div className="mb-3">
             <input
               required
@@ -84,8 +70,6 @@ const Register = () => {
               value={password}
             />
           </div>
-
-          {/* Mobile input */}
           <div className="mb-3">
             <input
               required
@@ -96,8 +80,6 @@ const Register = () => {
               value={mobile}
             />
           </div>
-
-          {/* Address input */}
           <div className="mb-3">
             <input
               required
@@ -109,7 +91,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Submit button */}
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
@@ -119,5 +100,4 @@ const Register = () => {
   );
 };
 
-// Export the Register component
 export default Register;

@@ -9,7 +9,7 @@ export const registerUser = async (req, res) => {
     const { name, email, mobile, address, password } = req.body;
 
     if (!name || !email || !mobile || !address || !password) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res.status(400).json({ success: false,message: "All fields are required" });
     }
 
     // Check if user already exists
@@ -33,7 +33,7 @@ export const registerUser = async (req, res) => {
 
     await user.save();
 
-    return res.status(201).json({ message: "User created", user: user });
+    return res.status(201).json({ success:true,message: "Registration successful", user: user });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -48,12 +48,14 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(404).send({
+        success: false,
         message: "please enter email and password",
       });
     }
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       return res.status(404).send({
+        success: false,
         message: "invalid email",
       });
     }
@@ -63,6 +65,7 @@ export const loginUser = async (req, res) => {
     );
     if (!matchPassword) {
       return res.status(200).send({
+        success: false,
         message: "invalid password",
       });
     }

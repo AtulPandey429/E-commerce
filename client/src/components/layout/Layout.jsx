@@ -1,8 +1,9 @@
 import React from 'react'
-
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Footer'
 import Navbar from './Navbar';
-import {Toaster} from "react-hot-toast"
+
 import {Helmet } from "react-helmet"
 const Layout = ({children,title,description,keywords,author}) => {
   return (
@@ -18,7 +19,7 @@ const Layout = ({children,title,description,keywords,author}) => {
         
         <main style={{"height":"80vh"}}>
     {children}
-  <Toaster/>
+  <ToastContainer/>
         </main>
         <Footer/>
     </div>
