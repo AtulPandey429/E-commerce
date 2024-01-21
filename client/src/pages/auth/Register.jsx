@@ -1,6 +1,5 @@
 import { React, useState } from "react";
-import Layout from "../../components/layout/Layout";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import Layout from "../../components/layout/Layout";;
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
@@ -23,11 +22,10 @@ const Register = () => {
       );
 
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.success("response.data.message");
         navigate("/login");
       } else {
-        // Handle specific error cases based on response.data.error
-        toast.error(response.data.error || "Registration failed");
+        toast.error(response.data.message || "Registration failed");
       }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again later.");

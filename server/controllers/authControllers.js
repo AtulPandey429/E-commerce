@@ -9,7 +9,9 @@ export const registerUser = async (req, res) => {
     const { name, email, mobile, address, password } = req.body;
 
     if (!name || !email || !mobile || !address || !password) {
-      return res.status(400).json({ success: false,message: "All fields are required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
     }
 
     // Check if user already exists
@@ -33,7 +35,9 @@ export const registerUser = async (req, res) => {
 
     await user.save();
 
-    return res.status(201).json({ success:true,message: "Registration successful", user: user });
+    return res
+      .status(201)
+      .json({ success: true, message: "Registration successful", user: user });
   } catch (error) {
     return res.status(500).json({
       success: false,
