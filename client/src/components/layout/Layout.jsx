@@ -4,9 +4,10 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 import { Helmet } from "react-helmet";
-import { ToastContainer } from "react-toastify";
+import { Toaster} from "react-hot-toast";
 import 'react-toastify/dist/ReactToastify.css';
 const Layout = ({ children, title, description, keywords, author }) => {
+  
   return (
     <div>
       <Helmet>
@@ -20,7 +21,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
 
       <main style={{ height: "80vh" }}>
         {children}
-        <ToastContainer />
+        <Toaster />
       </main>
       <Footer />
     </div>

@@ -1,7 +1,17 @@
 import React from 'react'
 import { Link, NavLink  } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { toast } from 'react-hot-toast';
 
 const Navbar = () => {
+  const [auth,setauth] = useAuth();
+ const handlelogout =()=>{
+  setauth({
+    ...auth,user:null,token:""
+  });
+  localStorage.removeItem('auth');
+  toast.success("successfully logedout");
+ }
   return (
     <>
     
@@ -20,12 +30,15 @@ const Navbar = () => {
         <li className="nav-item">
           <NavLink to="/category" className="nav-link " >category</NavLink >
         </li>
-        <li className="nav-item">
+       {!auth.user ? ( <> <li className="nav-item">
           <NavLink to="/register" className="nav-link" >Register</NavLink >
         </li>
         <li className="nav-item">
           <NavLink to="/login" className="nav-link" >Login</NavLink >
-        </li>
+        </li></>):( 
+        <li className="nav-item">
+          <NavLink onClick={handlelogout} to="/login" className="nav-link" >LogOut</NavLink >
+        </li>)}
         <li className="nav-item">
           <NavLink to="/cart" className="nav-link" >Cart(0)</NavLink >
         </li>

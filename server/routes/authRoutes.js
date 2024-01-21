@@ -1,6 +1,6 @@
 import express from "express";
 import { registerUser, loginUser } from "../controllers/authControllers.js";
-import { requireSignIn } from "./../middlewares/authMiddlewares.js";
+
 const routes = express.Router();
 
 //register route
