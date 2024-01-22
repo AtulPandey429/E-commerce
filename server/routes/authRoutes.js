@@ -8,4 +8,9 @@ routes.post("/register", registerUser);
 
 //login route
 routes.post("/login", loginUser);
+
+//dashboard route
+routes.get("/user-auth", (req, res) => {
+  res.status(500).send({ ok: true });
+});
 export default routes;
