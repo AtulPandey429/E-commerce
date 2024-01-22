@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import Layout from "../../components/layout/Layout";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
 import axios from "axios";
@@ -8,9 +8,9 @@ import { useAuth } from "../../context/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [auth,setauth] = useAuth();
+  const [auth, setauth] = useAuth();
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,13 +22,16 @@ const Login = () => {
 
       if (response.data.success) {
         toast.success(response.data.message);
-        setauth({...auth,user:response.data.user,token:response.data.token});
-        localStorage.setItem('auth',JSON.stringify(response.data))
-        navigate("/");
+        setauth({
+          ...auth,
+          user: response.data.user,
+          token: response.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(response.data));
+        navigate(location.state || "/");
       } else {
         toast.error(response.data.message);
       }
-    
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again later.");
       console.log(error); // Log for debugging
