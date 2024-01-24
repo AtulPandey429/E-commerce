@@ -6,9 +6,9 @@ import JWT from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, mobile, address, password } = req.body;
+    const { name, email, mobile, address, password, answer } = req.body;
 
-    if (!name || !email || !mobile || !address || !password) {
+    if (!name || !email || !mobile || !address || !password || !answer) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
@@ -30,6 +30,7 @@ export const registerUser = async (req, res) => {
       email,
       mobile,
       address,
+      answer,
       password: newPassword,
     });
 
@@ -89,6 +90,7 @@ export const loginUser = async (req, res) => {
         email: existingUser.email,
         mobile: existingUser.mobile,
         address: existingUser.address,
+        answer: existingUser.answer,
       },
       token,
     });
@@ -98,5 +100,32 @@ export const loginUser = async (req, res) => {
       message: "email or password is wrong",
       error: error.message,
     });
+  }
+};
+
+//forget password
+
+export const forgetPassword = async (req, res) => {
+  try {
+    const { email, answer, newpassword } = req.body;
+    if (!email || !answer || !newpassword) {
+      return res.status(400).json({ message: "all fields are mandatory" });
+    }
+    const findDetails = await User.findOne({ email, answer });
+    if (!findDetails) {
+      return res.status(400).json({ message: "email or answer is wrong" });
+    }
+    const newPassword = await hashpassword(newpassword);
+    const updatePassword = await User.findByIdAndUpdate(findDetails._id, {
+      password: newPassword,
+    });
+    updatePassword.save();
+    return res
+      .status(500)
+      .json({ success: true,message:"successfull", user: { email: findDetails.email } });
+  } catch (error) {
+    res
+      .status(406)
+      .send({ success: false, message: "error in forgetpassword" });
   }
 };

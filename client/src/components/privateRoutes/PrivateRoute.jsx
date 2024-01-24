@@ -5,23 +5,29 @@ import { Outlet } from "react-router-dom";
 import Spinner from "./../spinner/Spinner";
 
 const PrivateRoute = () => {
-  const [ok, setok] = useState(false);
-  const [auth, setauth] = useAuth();
-  useEffect(() => {
-    const authcheck = async () => {
-      const res = await axios.get(
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [auth, setAuth] = useAuth();
+
+  const checkAuthentication = async () => {
+    try {
+      const response = await axios.get(
         "http://localhost:7070/api/v1/auth/user-auth"
       );
-      if (res.data.ok) {
-        setok(true);
-      } else {
-        setok(false);
-      }
-    };
-    if (auth?.token) authcheck();
+      const isOk = response.data.ok;
+      setIsAuthenticated(isOk);
+    } catch (error) {
+      console.error("Error during authentication check:", error);
+      // Handle the error, e.g., redirect to an error page
+    }
+  };
+
+  useEffect(() => {
+    if (auth?.token) {
+      checkAuthentication();
+    }
   }, [auth?.token]);
 
-  return ok ? <Outlet /> : <Spinner />;
+  return isAuthenticated ? <Outlet /> : <Spinner />;
 };
 
 export default PrivateRoute;

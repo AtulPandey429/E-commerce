@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import "./Spinner.css"; // Import your custom CSS for styling
 
 const Spinner = () => {
-  const [count, setcount] = useState(5);
+  const [count, setCount] = useState(5);
   const navigate = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setcount((precount) => --precount);
+      setCount((prevCount) => prevCount - 1);
     }, 1000);
-    count === 0 && navigate("/login",{
-        state:location.pathname
-    });
+
+    if (count === 0) {
+      navigate("/login", { state: location.pathname });
+      clearInterval(interval);
+    }
+
     return () => clearInterval(interval);
-  }, [count, navigate,location]);
+  }, [count, navigate, location]);
 
   return (
     <>
-      <div
-        className="  d-flex flex-column align-items-center justify-content-center   "
-        style={{ height: "70vh" }}
-      >
-        <h2 className="">redirected in {count} sec</h2>
-        <div className="col-12 spinner-border " role="status">
-          <span className="visually-hidden">Loading...</span>
+      {count > 0 && (
+        <div className="spinner-container">
+          <div className="spinner-content">
+            <h2 className="countdown-text">Redirecting in {count} seconds</h2>
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

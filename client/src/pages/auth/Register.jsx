@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import Layout from "../../components/layout/Layout";;
+import Layout from "../../components/layout/Layout";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,7 +19,7 @@ const Register = () => {
     try {
       const response = await axios.post(
         "http://localhost:7070/api/v1/auth/register",
-        { name, email, password, address, mobile }
+        { name, email, password, address, mobile, answer }
       );
 
       if (response.data.success) {
@@ -86,6 +87,16 @@ const Register = () => {
               type="text"
               className="form-control"
               value={address}
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              onChange={(e) => setAnswer(e.target.value)}
+              placeholder="Enter your favourite movie"
+              type="text"
+              className="form-control"
+              value={answer}
+              required
             />
           </div>
 
