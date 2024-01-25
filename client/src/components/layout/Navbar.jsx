@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, NavLink  } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { toast } from 'react-hot-toast';
+import { toast } from 'react-toastify';
+
 
 const Navbar = () => {
   const [auth,setauth] = useAuth();
@@ -10,7 +11,7 @@ const Navbar = () => {
     ...auth,user:null,token:""
   });
   localStorage.removeItem('auth');
-  toast.success("successfully logedout");
+  toast.success("successfully logged out");
  }
   return (
     <>

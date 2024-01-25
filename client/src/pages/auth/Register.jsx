@@ -1,9 +1,10 @@
 import { React, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css';
+import "./Auth.css";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ const Register = () => {
       );
 
       if (response.data.success) {
-        toast.success("response.data.message");
+        toast.success(response.data.message || "success");
         navigate("/login");
       } else {
         toast.error(response.data.message || "Registration failed");
@@ -36,29 +37,39 @@ const Register = () => {
 
   return (
     <Layout title={"Register"}>
-      <div className="register">
-        <form onSubmit={handleSubmit}>
-          <h2 className="text-center ">Register</h2>
+      <ToastContainer />
+      <div className="container-fluid my-5 custom-container">
+        <form
+          onSubmit={handleSubmit}
+          className="shadow p-4 bg-white rounded custom-form"
+        >
+          <h4 className="text-center font-weight-bold mb-4">REGISTER</h4>
+
           <div className="mb-3">
             <input
               required
               onChange={(e) => setName(e.target.value)}
               type="text"
+              autoComplete="on"
               className="form-control"
               placeholder="Enter your name"
               value={name}
+              name="registerName" // Provide a unique name
             />
           </div>
+
           <div className="mb-3">
             <input
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
               type="email"
-              className="form-control"
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="form-control"
+              placeholder="Enter Your Email"
+              autoComplete="email" // Set to "email" for email suggestions
+              name="registerEmail" // Provide a unique name
             />
           </div>
+
           <div className="mb-3">
             <input
               required
@@ -67,8 +78,10 @@ const Register = () => {
               type="password"
               className="form-control"
               value={password}
+              name="registerPassword" // Provide a unique name
             />
           </div>
+
           <div className="mb-3">
             <input
               required
@@ -77,8 +90,10 @@ const Register = () => {
               type="text"
               className="form-control"
               value={mobile}
+              name="registerMobile" // Provide a unique name
             />
           </div>
+
           <div className="mb-3">
             <input
               required
@@ -87,8 +102,10 @@ const Register = () => {
               type="text"
               className="form-control"
               value={address}
+              name="registerAddress" // Provide a unique name
             />
           </div>
+
           <div className="mb-3">
             <input
               onChange={(e) => setAnswer(e.target.value)}
@@ -97,6 +114,7 @@ const Register = () => {
               className="form-control"
               value={answer}
               required
+              name="registerAnswer" // Provide a unique name
             />
           </div>
 

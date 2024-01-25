@@ -121,11 +121,11 @@ export const forgetPassword = async (req, res) => {
     });
     updatePassword.save();
     return res
-      .status(500)
+      .status(200)
       .json({ success: true,message:"successfull", user: { email: findDetails.email } });
   } catch (error) {
     res
-      .status(406)
+      .status(500)
       .send({ success: false, message: "error in forgetpassword" });
   }
 };
