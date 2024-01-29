@@ -91,6 +91,7 @@ export const loginUser = async (req, res) => {
         mobile: existingUser.mobile,
         address: existingUser.address,
         answer: existingUser.answer,
+        answer: existingUser.role,
       },
       token,
     });

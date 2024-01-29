@@ -1,6 +1,6 @@
 import express from "express";
 import { registerUser, loginUser, forgetPassword } from "../controllers/authControllers.js";
-import { requireSignIn } from "./../middlewares/authMiddlewares.js";
+import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
 
 const routes = express.Router();
 
@@ -12,6 +12,10 @@ routes.post("/login", loginUser);
 
 //dashboard route
 routes.get("/user-auth", requireSignIn, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+//admin route
+routes.get("/admin-auth", requireSignIn,isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 //forgetPassword route

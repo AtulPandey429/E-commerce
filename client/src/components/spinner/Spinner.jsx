@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import "./Spinner.css"; // Import your custom CSS for styling
 
-const Spinner = () => {
+const Spinner = ({ path = "login" }) => {
   const [count, setCount] = useState(5);
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,12 +13,12 @@ const Spinner = () => {
     }, 1000);
 
     if (count === 0) {
-      navigate("/login", { state: location.pathname });
+      navigate(`${path}`, { state: location.pathname });
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
-  }, [count, navigate, location]);
+  }, [count, navigate, location, path]);
 
   return (
     <>
