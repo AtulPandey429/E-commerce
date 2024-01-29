@@ -45,7 +45,7 @@ const Navbar = () => {
           </li>
           <ul className="dropdown-menu">
             <li className='dropdown-item'>
-              <NavLink to={`/dashboard/${auth?.user?.role==0 ? 'user' :'admin'}` }  className="nav-link">Dashboard</NavLink>
+              <NavLink to={`/dashboard/${auth?.user?.role===1 ? 'admin' :'user'}` }  className="nav-link">Dashboard</NavLink>
             </li>
             <li className="dropdown-item">
               <NavLink onClick={handlelogout} to="/login" className="nav-link">Logout</NavLink>

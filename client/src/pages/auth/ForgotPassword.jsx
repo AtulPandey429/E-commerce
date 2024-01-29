@@ -21,7 +21,7 @@ const ForgotPassword = () => {
         "http://localhost:7070/api/v1/auth/forgotpassword",
         {
           email,
-          newPassword,
+          newpassword: newPassword,
           answer,
         }
       );

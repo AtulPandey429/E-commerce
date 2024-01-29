@@ -27,7 +27,7 @@ const  AdminPrivateRoute = () => {
     }
   }, [auth?.token]);
 
-  return isAuthenticated ? <Outlet /> : <Spinner path="" />;
+  return isAuthenticated ? <Outlet /> : <Spinner path="/" />;
 };
 
 export default  AdminPrivateRoute;
