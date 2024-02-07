@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+
 import axios from "axios";
 import { Outlet } from "react-router-dom";
-import Spinner from "./../spinner/Spinner";
+import { useAuth } from "../../context/AuthContext.jsx";
+import Spinner from "../../components/spinner/Spinner";
 
-const  AdminPrivateRoute = () => {
+const AdminPrivateRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [auth, setAuth] = useAuth();
 
@@ -30,4 +31,4 @@ const  AdminPrivateRoute = () => {
   return isAuthenticated ? <Outlet /> : <Spinner path="/" />;
 };
 
-export default  AdminPrivateRoute;
+export default AdminPrivateRoute;

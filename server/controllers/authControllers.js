@@ -77,11 +77,9 @@ export const loginUser = async (req, res) => {
 
     //genrate token
 
-    const token = await JWT.sign(
-      { _id: existingUser._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    const token = JWT.sign({ _id: existingUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
     res.status(200).send({
       success: true,
       message: "login success",
@@ -91,7 +89,7 @@ export const loginUser = async (req, res) => {
         mobile: existingUser.mobile,
         address: existingUser.address,
         answer: existingUser.answer,
-        answer: existingUser.role,
+        role: existingUser.role,
       },
       token,
     });
@@ -121,9 +119,11 @@ export const forgetPassword = async (req, res) => {
       password: newPassword,
     });
     updatePassword.save();
-    return res
-      .status(200)
-      .json({ success: true,message:"successfull", user: { email: findDetails.email } });
+    return res.status(200).json({
+      success: true,
+      message: "successfull",
+      user: { email: findDetails.email },
+    });
   } catch (error) {
     res
       .status(500)

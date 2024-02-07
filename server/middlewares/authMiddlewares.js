@@ -28,9 +28,6 @@ export const isAdmin = async (req, res, next) => {
       });
     } else {
       next();
-      res.status(500).send({
-        message:"admin logged in"
-      })
     }
   } catch (error) {
     res.status(404).send({
