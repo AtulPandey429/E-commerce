@@ -18,7 +18,7 @@ export const CreateCategory = async (req, res) => {
       });
     }
 
-   const newcategory= await Category({
+    const newcategory = await Category({
       name,
       slug: slugify(name),
     }).save();
@@ -31,7 +31,84 @@ export const CreateCategory = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "somthing wrong ",
+      error,
+      message: "error in createfunction ",
     });
   }
 };
+export const updateCategory = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const { id } = req.params;
+    const updatedname = await Category.findByIdAndUpdate(
+      id,
+      { name, slug: slugify(name) },
+      { new: true }
+    );
+    return res.status(200).send({
+      success: true,
+      message: "successfully updated",
+      updatedname,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in updatefunction ",
+    });
+  }
+};
+
+export const getAllCategory = async (req, res) => {
+  try {
+    const allcategory = await Category.find({});
+    res.status(200).send({
+      success: true,
+      message: "all category is here",
+      allcategory,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in getall ",
+    });
+  }
+};
+
+export const getOneCategory = async (req, res) => {
+  try {
+    const oneCategory = await Category.findOne({ slug: req.params.slug });
+    return res.status(200).send({
+      success: true,
+      message: "desired category is here",
+      oneCategory,
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in above one ",
+    });
+  }
+};
+  //delete constrolller
+
+  export const deleteCategory = async(req,res)=>{
+    try {
+        const {id} = req.params
+        const deleteItem = await Category.findByIdAndDelete(id)
+        res.status(200).send({
+            success:true,
+            message:"deleted category is here",
+            deleteItem
+        }) 
+    } catch (error) {
+        res.status(500).send({
+            success:false,
+            error,
+            message:"not deleted",
+            
+        }) 
+    }
+  }
