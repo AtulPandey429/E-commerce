@@ -1,5 +1,5 @@
 import express from "express";
-// import formidable from "formidable";
+import formidable from "express-formidable";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
 import { createProduct } from "../controllers/productControllers.js";
 
@@ -7,13 +7,7 @@ const routes = express.Router();
 
 routes.post(
   "/create-product",
-//   async (req, res, next) => {
-//     try {
-//       await formidable()(req, res, next);
-//     } catch (error) {
-//       return res.status(500).send({ error: "Error parsing form data" });
-//     }
-//   },
+  formidable(),
   requireSignIn,
   isAdmin,
   createProduct
