@@ -18,17 +18,11 @@ export const createProduct = async (req, res) => {
     const product = new Product({ ...req.fields, slug: slugify(name) });
 
     if (photo) {
-      fs.readFile(photo.path, (err, data) => {
-        if (err) {
-          throw err;
-        }
-        product.photo.data = data;
-        product.photo.contentType = photo.type;
-        product.save();
-      });
-    } else {
-      await product.save();
+     
+      product.photo.data = fs.readFileSync(photo.path);
+      product.photo.contentType = photo.type;
     }
+      await product.save();
 
     res.status(201).send({
       success: true,
