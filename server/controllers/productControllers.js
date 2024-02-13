@@ -1,28 +1,40 @@
-import fs from "fs";
 import Product from "../models/productModel.js";
 import slugify from "slugify";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, price, description, quantity, category } = req.fields;
-    const { photo } = req.files;
+    console.log("Request Fields:", req.body);
+    console.log("Request File:", req.file);
+    const { name, price, description, quantity, category } = req.body;
+    const { file } = req;
 
     if (!name || !price || !description || !quantity || !category) {
       return res.status(400).send({ error: "All fields are required" });
     }
 
-    if (photo && photo.size > 10000000) { // Adjusted file size limit
+    if (!file) {
+      return res.status(400).send({ error: "No file uploaded" });
+    }
+
+    if (file.size > 10000000) {
       return res.status(400).send({ error: "Photo size should be less than 10MB" });
     }
 
-    const product = new Product({ ...req.fields, slug: slugify(name) });
+    const photoUrl = await uploadOnCloudinary(file.path);
+    console.log("Photo URL:", photoUrl);
 
-    if (photo) {
-     
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
-    }
-      await product.save();
+    const product = new Product({
+      name,
+      price,
+      description,
+      quantity,
+      category,
+      file: photoUrl,
+      slug: slugify(name)
+    });
+
+    await product.save();
 
     res.status(201).send({
       success: true,
