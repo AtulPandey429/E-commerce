@@ -1,6 +1,6 @@
 import express from "express";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
-import { createProduct } from "../controllers/productControllers.js";
+import { createProduct, deleteProduct, getAllProducts, getSingleProduct } from "../controllers/productControllers.js";
 import upload from "../utils/multer.js";
 
 const routes = express.Router();
@@ -12,5 +12,14 @@ routes.post(
   isAdmin,
   createProduct
 );
+//getAllproduct route
+routes.get("/get-products", getAllProducts)
+
+//getSingleProduct route
+
+routes.get("/get-product/:slug", getSingleProduct) 
+  // deleteProduct route
+routes.delete("/delete-product/:id", deleteProduct)
+
 
 export default routes;
