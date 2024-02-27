@@ -1,6 +1,8 @@
 import Product from "../models/productModel.js";
 import slugify from "slugify";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import mongoose from "mongoose";
+
 
 export const createProduct = async (req, res) => {
   try {
@@ -151,3 +153,70 @@ res.status(200).send({
 })
  }
 }
+
+
+// update product controller
+
+
+export const updateProduct = async (req, res) => {
+  try {
+    const { name, price, description, quantity, category } = req.body;
+    const { file } = req;
+
+    // Validate if all required fields are present
+    if (!name || !price || !description || !quantity || !category) {
+      return res.status(400).send({ error: "All fields are required" });
+    }
+
+    // Check if file is uploaded
+    if (!file) {
+      return res.status(400).send({ error: "No file uploaded" });
+    }
+
+    // Check if file size exceeds the limit
+    if (file.size > 10000000) {
+      return res.status(400).send({ error: "Photo size should be less than 10MB" });
+    }
+
+    // Get the photo URL from Cloudinary
+    const photoUrl = await uploadOnCloudinary(file.path);
+    console.log("Photo URL:", photoUrl);
+
+    // Find the product by ID
+    const product = await Product.findById(req.params.id);
+
+    // If product not found
+    if (!product) {
+      return res.status(404).send({ error: "Product not found" });
+    }
+
+    // Update the product fields
+    product.name = name;
+    product.price = price;
+    product.description = description;
+    product.quantity = quantity;
+    product.category = category;
+    product.photo = photoUrl;
+    product.slug = slugify(name);
+
+    // Save the updated product
+    await product.save();
+
+    // Send the response
+    res.status(200).send({
+      success: true,
+      message: "Product updated successfully",
+      product,
+      photoUrl,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating product",
+      error: error.message,
+    });
+  }
+};
+
+
