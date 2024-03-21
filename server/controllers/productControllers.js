@@ -159,64 +159,47 @@ res.status(200).send({
 
 
 export const updateProduct = async (req, res) => {
+  const { name, price, description, quantity, category } = req.body;
+  const { file } = req;
+
   try {
-    const { name, price, description, quantity, category } = req.body;
-    const { file } = req;
-
-    // Validate if all required fields are present
-    if (!name || !price || !description || !quantity || !category) {
-      return res.status(400).send({ error: "All fields are required" });
+    if (![name, price, description, quantity, category, file].every(Boolean)) {
+      return res.status(400).json({ error: "All fields are required" });
     }
 
-    // Check if file is uploaded
-    if (!file) {
-      return res.status(400).send({ error: "No file uploaded" });
-    }
-
-    // Check if file size exceeds the limit
     if (file.size > 10000000) {
-      return res.status(400).send({ error: "Photo size should be less than 10MB" });
+      return res.status(400).json({ error: "Photo size should be less than 10MB" });
     }
 
-    // Get the photo URL from Cloudinary
     const photoUrl = await uploadOnCloudinary(file.path);
-    console.log("Photo URL:", photoUrl);
 
-    // Find the product by ID
-    const product = await Product.findById(req.params.id);
+    let product = await Product.findByIdAndUpdate(req.params.id, {
+      name,
+      price,
+      description,
+      quantity,
+      category,
+      photo: photoUrl,
+      slug: slugify(name)
+    }, { new: true });
 
-    // If product not found
     if (!product) {
-      return res.status(404).send({ error: "Product not found" });
+      return res.status(404).json({ error: "Product not found" });
     }
 
-    // Update the product fields
-    product.name = name;
-    product.price = price;
-    product.description = description;
-    product.quantity = quantity;
-    product.category = category;
-    product.photo = photoUrl;
-    product.slug = slugify(name);
-
-    // Save the updated product
-    await product.save();
-
-    // Send the response
-    res.status(200).send({
+    res.status(200).json({
       success: true,
       message: "Product updated successfully",
       product,
-      photoUrl,
+      photoUrl
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send({
+    res.status(500).json({
       success: false,
       message: "Error in updating product",
-      error: error.message,
+      error: error.message
     });
   }
 };
-
 

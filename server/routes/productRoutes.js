@@ -5,29 +5,22 @@ import upload from "../utils/multer.js";
 
 const routes = express.Router();
 
-routes.post(
-  "/create-product",
-  upload.single("file"),
-  requireSignIn,
-  isAdmin,
-  createProduct
-);
-//getAllproduct route
-routes.get("/get-products", getAllProducts)
+// Create product route
+routes.post("/create-product", requireSignIn, isAdmin, upload.single("file"), createProduct);
 
-//getSingleProduct route
+// Get all products route (public)
+routes.get("/get-products", getAllProducts);
 
-routes.get("/get-product/:slug", getSingleProduct) 
-  // deleteProduct route
-routes.delete("/delete-product/:id", deleteProduct)
+// Get single product route (public)
+routes.get("/get-product/:slug", getSingleProduct);
 
-// getPhoto Url 
-routes.get("/product-photo/:_id", getCloudinaryphoto)
+// Delete product route
+routes.delete("/delete-product/:id", requireSignIn, isAdmin, deleteProduct);
 
-// update product-route 
+// Get photo URL route
+routes.get("/product-photo/:_id", getCloudinaryphoto);
 
-routes.put("/update-product/:id", updateProduct)
-
-
+// Update product route
+routes.put("/update-product/:id", requireSignIn, isAdmin, upload.single("file"), updateProduct);
 
 export default routes;
