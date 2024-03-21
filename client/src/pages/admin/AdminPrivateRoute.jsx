@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 
 import axios from "axios";
 import { Outlet } from "react-router-dom";
@@ -7,7 +7,7 @@ import Spinner from "../../components/spinner/Spinner";
 
 const AdminPrivateRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
 
   const checkAuthentication = async () => {
     try {
