@@ -1,81 +1,102 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { Modal } from "antd";
 import AdminMenu from "../../components/layout/AdminMenu";
 import Layout from "../../components/layout/Layout";
-import { toast } from "react-toastify";
+import CategoryForm from './form/CategoryForm';
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
-  const [editCategory, setEditCategory] = useState(null);
+  const [editCategoryId, setEditCategoryId] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
   useEffect(() => {
-    getAllCategory();
+    getAllCategories();
   }, []);
 
-  const getAllCategory = async () => {
+  const getAllCategories = async () => {
     try {
-      const res = await axios.get(
+      const response = await axios.get(
         "http://localhost:7070/api/v1/category/allcategory"
       );
-      if (res.data.success) {
-        setCategories(res.data.category);
-        toast.success(res.data.message);
+      if (response.data.success) {
+        setCategories(response.data.category);
+        toast.success(response.data.message);
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An error occurred while fetching categories.");
-      }
+      handleError(error, "An error occurred while fetching categories.");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
+      const response = await axios.post(
         "http://localhost:7070/api/v1/category/create-category",
         { name }
       );
-      if (res.data.success) {
-        getAllCategory();
-        toast.success(res.data.message);
+      if (response.data.success) {
+        getAllCategories();
+        toast.success(`${name} is created`);
         setName("");
       }
     } catch (error) {
-      console.error(error);
-      toast.error(
-        error.response && error.response.data
-          ? error.response.data.message
-          : "An error occurred while creating the category."
-      );
+      handleError(error, "An error occurred while creating the category.");
     }
   };
 
-  const handleEdit = async (category_id) => {
+  const handleDelete = async (categoryId) => {
     try {
-      const res = await axios.put(
-        `http://localhost:7070/api/v1/category/update-category/${category_id}`,
-        { name } // Send the updated name in the request body
+      const response = await axios.delete(
+        `http://localhost:7070/api/v1/category/deletecategory/${categoryId}`
       );
-      if (res.data.success) {
-        getAllCategory();
-        toast.success(res.data.message);
-        setName("");
-        setEditCategory(null); // Reset the edit state after successful update
+      if (response.data.success) {
+        getAllCategories();
+        toast.success(response.data.message);
       }
     } catch (error) {
-      toast.error(
-        error.response && error.response.data
-          ? error.response.data.message
-          : "An error occurred while updating the category."
-      );
+      handleError(error, "An error occurred while deleting the category.");
     }
+  };
+
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:7070/api/v1/category/update-category/${editCategoryId}`,
+        { name }
+      );
+      if (response.data.success) {
+        getAllCategories();
+        toast.success(response.data.message);
+        setName("");
+        setEditCategoryId(null);
+        setIsModalVisible(false);
+      }
+    } catch (error) {
+      handleError(error, "An error occurred while updating the category.");
+    }
+  };
+
+  const handleError = (error, errorMessage) => {
+    toast.error(
+      error.response && error.response.data
+        ? error.response.data.message
+        : errorMessage
+    );
+  };
+
+  const handleDeleteModal = (categoryId) => {
+    setEditCategoryId(categoryId);
+    setIsDeleteModalVisible(true);
+  };
+
+  const confirmDelete = () => {
+    handleDelete(editCategoryId);
+    setIsDeleteModalVisible(false);
   };
 
   return (
@@ -87,21 +108,11 @@ const CreateCategory = () => {
           </div>
           <div className="col">
             <h3 className="my-4">Category</h3>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">
-                Create
-              </button>
-            </form>
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              name={name}
+              setName={setName}
+            />
             <table className="table mt-4">
               <thead>
                 <tr>
@@ -112,40 +123,53 @@ const CreateCategory = () => {
               <tbody>
                 {categories.map((category) => (
                   <tr key={category._id}>
+                    <td>{category.slug}</td>
                     <td>
-                      {editCategory === category._id ? (
-                        <input
-                          type="text"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="form-control"
-                        />
-                      ) : (
-                        category.name
-                      )}
+                      <button
+                        className="btn btn-success"
+                        onClick={() => {
+                          setIsModalVisible(true);
+                          setEditCategoryId(category._id);
+                          setName(category.slug);
+                        }}
+                      >
+                        Edit
+                      </button>
                     </td>
                     <td>
-                      {editCategory === category._id ? (
-                        <button
-                          className="btn btn-success"
-                          onClick={() => setEditCategory(null)}
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-info"
-                          onClick={handleEdit}
-                        >
-                          Edit
-                        </button>
-                      )}
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDeleteModal(category._id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <Modal
+            onCancel={() => setIsModalVisible(false)}
+            footer={null}
+            open={isModalVisible}
+          >
+            <CategoryForm
+              handleSubmit={handleEdit}
+              name={name}
+              setName={setName}
+            />
+          </Modal>
+          <Modal
+            title="Delete Category"
+            open={isDeleteModalVisible}
+            onOk={confirmDelete}
+            onCancel={() => setIsDeleteModalVisible(false)}
+            okText="Confirm"
+            cancelText="Cancel"
+          >
+            Are you sure you want to delete this category?
+          </Modal>
         </div>
       </div>
     </Layout>

@@ -1,23 +1,28 @@
-
 import { NavLink } from "react-router-dom";
+import "./AdminMenu.css"; // Import CSS file for styling
 
 const AdminMenu = () => {
   return (
-    <div>
-      <ul className="list-group">
-        <li className="list-group-item list-group-item-warning ">
-          <NavLink to="" className='text-dark' style={{ textDecoration: "none",borderBottom:"0" }}>
-            Create-User
+    <div className="admin-menu-container">
+      <ul className="admin-menu-list">
+        <li className="admin-menu-item">
+          <NavLink to="" className="admin-menu-link">
+            Create User
           </NavLink>
         </li>
-        <li className="list-group-item list-group-item-primary ">
-          <NavLink to="/dashboard/admin/create-products"className='text-dark' style={{ textDecoration: "none" ,borderBottom:"0"}}>
-            Create-Product
+        <li className="admin-menu-item">
+          <NavLink to="/dashboard/admin/create-products" className="admin-menu-link">
+            Create Product
           </NavLink>
         </li>
-        <li className="list-group-item list-group-item-secondary">
-          <NavLink to="/dashboard/admin/create-category" className='text-dark' style={{ textDecoration: "none" ,borderBottom:"0"}}>
-            Create-Category
+        <li className="admin-menu-item">
+          <NavLink to="/dashboard/admin/products" className="admin-menu-link">
+             Product
+          </NavLink>
+        </li>
+        <li className="admin-menu-item">
+          <NavLink to="/dashboard/admin/create-category" className="admin-menu-link">
+            Create Category
           </NavLink>
         </li>
       </ul>
