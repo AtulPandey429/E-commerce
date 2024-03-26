@@ -6,10 +6,10 @@ import mongoose from "mongoose";
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, price, description, quantity, category } = req.body;
+    const { name, price, description, quantity, category,shipping } = req.body;
     const { file } = req;
 
-    if (!name || !price || !description || !quantity || !category) {
+    if (!name || !price || !description || !quantity || !category || !shipping) {
       return res.status(400).send({ error: "All fields are required" });
     }
 
@@ -32,6 +32,7 @@ export const createProduct = async (req, res) => {
       description,
       quantity,
       category,
+      shipping,
       photo: photoUrl,
       slug: slugify(name),
     });
@@ -159,11 +160,11 @@ res.status(200).send({
 
 
 export const updateProduct = async (req, res) => {
-  const { name, price, description, quantity, category } = req.body;
+  const { name, price, description, quantity, category,shipping } = req.body;
   const { file } = req;
 
   try {
-    if (![name, price, description, quantity, category, file].every(Boolean)) {
+    if (![name, price, description, quantity, category, file,shipping].every(Boolean)) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -179,6 +180,7 @@ export const updateProduct = async (req, res) => {
       description,
       quantity,
       category,
+      shipping,
       photo: photoUrl,
       slug: slugify(name)
     }, { new: true });

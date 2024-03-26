@@ -1,9 +1,9 @@
-import { useState } from "react";
+
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Layout from "./components/layout/Layout";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import {  Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -21,6 +21,7 @@ import Order from "./pages/user/Order";
 import CreateCategory from "./pages/admin/CreateCategory";
 import CreateProduct from "./pages/admin/CreateProduct";
 import Products from "./pages/admin/Products";
+import UpdateProduct from "./pages/admin/UpadateProduct";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="admin/create-category" element={<CreateCategory/>} />
           <Route path="admin/create-products" element={<CreateProduct />} />
           <Route path="admin/products" element={<Products/>} />
+          <Route path="admin/update-product/:slug" element={<UpdateProduct/>} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />

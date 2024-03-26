@@ -1,17 +1,18 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form, Input, Select } from 'antd';
-import AdminMenu from "../../components/layout/AdminMenu";
-import Layout from "../../components/layout/Layout";
 import { toast } from 'react-toastify';
+import AdminMenu from '../../components/Layout/AdminMenu';
+import Layout from '../../components/Layout/Layout';
 
 const CreateProduct = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
-  const [file, setFile] = useState(null); // Changed to null initially
+  const [shipping, setShipping] = useState(''); // Default value set to 'No'
+  const [file, setFile] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -19,6 +20,7 @@ const CreateProduct = () => {
 
   useEffect(() => {
     getAllCategories();
+    showModal()
   }, []);
 
   const handleOk = async () => {
@@ -27,29 +29,28 @@ const CreateProduct = () => {
       formData.append('name', name);
       formData.append('price', price);
       formData.append('quantity', quantity);
-      formData.append('category', selectedCategory); // Use selectedCategory instead of categories
+      formData.append('category', selectedCategory);
       formData.append('description', description);
-      formData.append('file', file); // Append the file object with key 'file'
+      formData.append('shipping', shipping); // Include shipping in form data
+      formData.append('file', file);
 
       const response = await axios.post('http://localhost:7070/api/v1/product/create-product', formData);
 
       if (response.data.success) {
         setIsModalVisible(false);
-        // Optionally, reset form fields
         setName('');
         setPrice('');
         setQuantity('');
         setDescription('');
+        setShipping('0'); // Reset shipping to default value
         setFile(null);
         setSelectedCategory('');
         toast.success('Product created successfully');
         navigate('/dashboard/admin/products');
       } else {
-        // Handle failure scenario, if necessary
         toast.error('Failed to create product');
       }
     } catch (error) {
-      // Handle error scenario
       console.error(error);
       toast.error('Failed to create product');
     }
@@ -80,21 +81,19 @@ const CreateProduct = () => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]); // Set the file object
+    setFile(e.target.files[0]);
   };
 
   return (
-    <Layout title={"Admin-CreateProduct"}>
+    <Layout title="Admin-CreateProduct">
       <div className="row m-2">
         <div className="col-2">
           <AdminMenu />
         </div>
         <div className="col-8">
           <h2>Create Product</h2>
-          <Button type="primary" onClick={showModal}>
-            Add Product
-          </Button>
-          <Modal title="Add Product" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+          
+          <Modal title="Add Product" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
             <Form>
               <Form.Item label="Name">
                 <Input value={name} onChange={(e) => setName(e.target.value)} />
@@ -125,6 +124,20 @@ const CreateProduct = () => {
               </Form.Item>
               <Form.Item label="Description">
                 <Input.TextArea value={description} onChange={(e) => setDescription(e.target.value)} />
+              </Form.Item>
+              <Form.Item label="Shipping">
+                <Select
+                  variant={false}
+                  placeholder="Select Shipping "
+                  size="large"
+                  className="form-select"
+                  onChange={(value) => {
+                    setShipping(value);
+                  }}
+                >
+                  <Select.Option value="0">No</Select.Option>
+                  <Select.Option value="1">Yes</Select.Option>
+                </Select>
               </Form.Item>
               <Form.Item label="Photo">
                 <input type="file" onChange={handleFileChange} />

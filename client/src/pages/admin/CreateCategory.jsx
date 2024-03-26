@@ -2,9 +2,10 @@ import  { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Modal } from "antd";
-import AdminMenu from "../../components/layout/AdminMenu";
-import Layout from "../../components/layout/Layout";
+
 import CategoryForm from './form/CategoryForm';
+import Layout from "../../components/Layout/Layout";
+import AdminMenu from "../../components/Layout/AdminMenu";
 
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
