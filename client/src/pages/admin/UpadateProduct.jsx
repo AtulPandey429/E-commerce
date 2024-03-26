@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Layout from './../../components/Layout/Layout';
 import AdminMenu from './../../components/Layout/AdminMenu';
 import {  Modal, Form, Input, Select, Button } from 'antd';

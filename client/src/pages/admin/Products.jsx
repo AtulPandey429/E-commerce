@@ -4,7 +4,7 @@ import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
 import {toast} from "react-toastify"
 import { Link } from "react-router-dom";
-import Category from './../../../../server/models/createCategory';
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
