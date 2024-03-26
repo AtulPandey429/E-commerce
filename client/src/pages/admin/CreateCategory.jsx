@@ -16,7 +16,7 @@ const CreateCategory = () => {
 
   useEffect(() => {
     getAllCategories();
-  }, []);
+  },[]);
 
   const getAllCategories = async () => {
     try {
@@ -72,7 +72,7 @@ const CreateCategory = () => {
       );
       if (response.data.success) {
         getAllCategories();
-        toast.success(response.data.message);
+        toast.success('all categories fetched');
         setName("");
         setEditCategoryId(null);
         setIsModalVisible(false);

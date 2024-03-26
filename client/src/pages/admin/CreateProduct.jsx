@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Modal, Button, Form, Input, Select } from 'antd';
+import { Modal, Form, Input, Select } from 'antd';
 import { toast } from 'react-toastify';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import Layout from '../../components/Layout/Layout';
+
+const { Option } = Select;
 
 const CreateProduct = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
-  const [shipping, setShipping] = useState(''); // Default value set to 'No'
+  const [shipping, setShipping] = useState(false); // Default value set to false
   const [file, setFile] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -20,18 +22,24 @@ const CreateProduct = () => {
 
   useEffect(() => {
     getAllCategories();
-    showModal()
+    showModal();
   }, []);
 
   const handleOk = async () => {
     try {
+      // Form validation
+      if (!name || !price || !quantity || !selectedCategory || !description || shipping === null || !file) {
+        toast.error('Please fill in all the fields');
+        return;
+      }
+
       const formData = new FormData();
       formData.append('name', name);
       formData.append('price', price);
       formData.append('quantity', quantity);
       formData.append('category', selectedCategory);
       formData.append('description', description);
-      formData.append('shipping', shipping); // Include shipping in form data
+      formData.append('shipping', shipping ? '1' : '0'); // Convert boolean to string
       formData.append('file', file);
 
       const response = await axios.post('http://localhost:7070/api/v1/product/create-product', formData);
@@ -42,7 +50,7 @@ const CreateProduct = () => {
         setPrice('');
         setQuantity('');
         setDescription('');
-        setShipping('0'); // Reset shipping to default value
+        setShipping(false); // Reset shipping to default value
         setFile(null);
         setSelectedCategory('');
         toast.success('Product created successfully');
@@ -74,6 +82,7 @@ const CreateProduct = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    navigate('/dashboard/admin/products'); // Navigate to products page after closing modal
   };
 
   const handleCategoryChange = (value) => {
@@ -91,8 +100,6 @@ const CreateProduct = () => {
           <AdminMenu />
         </div>
         <div className="col-8">
-          <h2>Create Product</h2>
-          
           <Modal title="Add Product" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
             <Form>
               <Form.Item label="Name">
@@ -116,9 +123,9 @@ const CreateProduct = () => {
                   }
                 >
                   {categories.map((category) => (
-                    <Select.Option key={category._id} value={category._id}>
+                    <Option key={category._id} value={category._id}>
                       {category.name}
-                    </Select.Option>
+                    </Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -127,16 +134,12 @@ const CreateProduct = () => {
               </Form.Item>
               <Form.Item label="Shipping">
                 <Select
-                  variant={false}
-                  placeholder="Select Shipping "
-                  size="large"
-                  className="form-select"
-                  onChange={(value) => {
-                    setShipping(value);
-                  }}
+                  value={shipping ? '1' : '0'}
+                  onChange={(value) => setShipping(value === '1')}
+                  placeholder="Select Shipping"
                 >
-                  <Select.Option value="0">No</Select.Option>
-                  <Select.Option value="1">Yes</Select.Option>
+                  <Option value="0">No</Option>
+                  <Option value="1">Yes</Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Photo">

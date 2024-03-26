@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import 'react-toastify/dist/ReactToastify.css';
 import "./Auth.css";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ const Register = () => {
 
   return (
     <Layout title={"Register"}>
-      <ToastContainer />
+    
       <div className="container-fluid my-5 custom-container">
         <form
           onSubmit={handleSubmit}

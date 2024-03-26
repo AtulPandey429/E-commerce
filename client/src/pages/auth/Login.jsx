@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./Auth.css";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +41,6 @@ const Login = () => {
 
   return (
     <Layout title={"Login"}>
-      <ToastContainer />
       <div className="container-fluid my-5 custom-container">
         <form
           onSubmit={handleSubmit}

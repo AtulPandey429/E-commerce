@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import Layout from "../../components/layout/Layout";
 import "./Auth.css"; // Import your custom CSS file
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -51,7 +51,6 @@ const ForgotPassword = () => {
 
   return (
     <Layout title="Forgot Password - Ecommerce APP">
-      <ToastContainer />
       <div className="container-fluid my-5 custom-container">
         <form
           onSubmit={handleSubmit}

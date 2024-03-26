@@ -25,6 +25,7 @@ const UpdateProduct = () => {
   useEffect(() => {
     getSingleProduct();
     getAllCategories();
+    //eslint ignore next line 
   }, []);
 
   useEffect(() => {
@@ -41,14 +42,21 @@ const UpdateProduct = () => {
         setDescription(description);
         setSelectedCategory(category);
         setQuantity(quantity);
+        // Convert shipping to boolean
         setShipping(shipping);
-        setFile(photo);
+        // Set photo URL
+        console.log(photo,shipping)
+        if (photo) {
+          setFile(photo);
+        }
         setProductId(_id); 
       }
     } catch (error) {
       toast.error('Product not found');
     }
   };
+  
+  
 
   const getAllCategories = async () => {
     try {
@@ -110,6 +118,7 @@ const UpdateProduct = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    navigate('/dashboard/admin/products'); // Navigate to products page after closing modal
   };
 
   const handleCategoryChange = (value) => {
@@ -117,7 +126,10 @@ const UpdateProduct = () => {
   };
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+     // Get the selected file object from the input
+  const selectedFile = e.target.files[0];
+  // Set the file state with the selected file object
+  setFile(selectedFile);
   };
 
   const showDeleteConfirm = () => {
@@ -140,7 +152,6 @@ const UpdateProduct = () => {
           <AdminMenu />
         </div>
         <div className="col-8">
-          <h2>Update Product</h2>
           <Modal title="Edit Product" open={isModalVisible} onOk={handleUpdate} onCancel={handleCancel} footer={[
             <Button key="delete"  className='btn btn-dnager' onClick={showDeleteConfirm}>
               Delete
@@ -182,13 +193,18 @@ const UpdateProduct = () => {
                 <Input.TextArea value={description} onChange={(e) => setDescription(e.target.value)} />
               </Form.Item>
               <Form.Item label="Shipping">
-                <Select value={shipping} onChange={(value) => setShipping(value)} placeholder="Select Shipping">
+                <Select value={shipping ? '1' : '0'} onChange={(value) => setShipping(value === '1')} placeholder="Select Shipping">
                   <Option value="0">No</Option>
                   <Option value="1">Yes</Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Photo">
-                <input type="file" onChange={handleFileChange} />
+              {file && (
+    <div className="mb-3">
+      <img src={file instanceof Blob || file instanceof File ? URL.createObjectURL(file) : file} alt="Product" className="img-thumbnail" style={{ maxWidth: "200px", maxHeight: "200px" }} />
+    </div>
+  )}
+                <input type="file" onChange={handleFileChange}  />
               </Form.Item>
             </Form>
           </Modal>
