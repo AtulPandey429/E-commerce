@@ -45,10 +45,10 @@ const UpdateProduct = () => {
         // Convert shipping to boolean
         setShipping(shipping);
         // Set photo URL
-        console.log(photo,shipping)
-        if (photo) {
+        
+        
           setFile(photo);
-        }
+        
         setProductId(_id); 
       }
     } catch (error) {
