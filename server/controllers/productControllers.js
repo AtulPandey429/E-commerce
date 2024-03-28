@@ -205,3 +205,33 @@ export const updateProduct = async (req, res) => {
   }
 };
 
+
+
+// product-filter controller 
+
+
+export const productFilter = async (req, res) => {
+  try {
+    const { checked, price } = req.body;
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    if (price.length > 0) args.price = { $gte: price[0], $lte: price[1] };
+
+    const products = await Product.find(args); // Pass args directly here
+
+    res.status(200).json({
+      success: true,
+      products
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error in fetching products",
+      error: error.message
+    });
+  }
+};
+
+
+

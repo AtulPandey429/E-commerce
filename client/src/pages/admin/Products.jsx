@@ -61,7 +61,7 @@ const Products = () => {
                 <img src={p.photo} className="card-img-top" alt={p.name} />
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
-                  <p className="card-text">Price: {p.price}</p>
+                  <p className="card-text">Price: ${p.price}</p>
                   <p className="card-text">Quantity: {p.quantity}</p>
                   <p className="card-text">Description: {p.description}</p>
                   <p className="card-text">Shipping: {getShippingLabel(p.shipping)}</p> {/* Convert boolean to string */}

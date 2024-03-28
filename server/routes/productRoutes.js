@@ -1,6 +1,6 @@
 import express from "express";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
-import { createProduct, deleteProduct, getAllProducts, getCloudinaryphoto, getSingleProduct, updateProduct } from "../controllers/productControllers.js";
+import { createProduct, deleteProduct, getAllProducts, getCloudinaryphoto, getSingleProduct, productFilter, updateProduct } from "../controllers/productControllers.js";
 import upload from "../utils/multer.js";
 
 const routes = express.Router();
@@ -22,5 +22,8 @@ routes.get("/product-photo/:_id", getCloudinaryphoto);
 
 // Update product route
 routes.put("/update-product/:id", requireSignIn, isAdmin, upload.single("file"), updateProduct);
+ 
+// product-filter route 
+routes.post("/product-filter",productFilter);
 
 export default routes;
