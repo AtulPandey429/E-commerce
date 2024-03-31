@@ -1,6 +1,6 @@
 import express from "express";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
-import { createProduct, deleteProduct, getAllProducts, getCloudinaryphoto, getSingleProduct, productFilter, updateProduct } from "../controllers/productControllers.js";
+import { createProduct, deleteProduct, getAllProducts, getCloudinaryphoto, getSingleProduct, productCount, productFilter, productList, updateProduct } from "../controllers/productControllers.js";
 import upload from "../utils/multer.js";
 
 const routes = express.Router();
@@ -25,5 +25,11 @@ routes.put("/update-product/:id", requireSignIn, isAdmin, upload.single("file"),
  
 // product-filter route 
 routes.post("/product-filter",productFilter);
+//product total-page 
+routes.get('/product-count',productCount)
+
+// perpage 
+routes.get('/product-perpage/:page', productList)
+
 
 export default routes;

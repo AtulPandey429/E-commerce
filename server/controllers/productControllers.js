@@ -233,5 +233,49 @@ export const productFilter = async (req, res) => {
   }
 };
 
+//productCountController logic
+export const productCount = async (req, res) => {
+  try{
+    const total = await Product.find({}).estimatedDocumentCount();
+    res.status(200).json({
+      success:true,
+      total,
+      message:"product count fetched successfully",
+    })
+  }catch(error){
+    console.error(error);
+    res.status(500).json({
+      success:false,
+      message:"error in fetching product count",
+      error:error.message,
+    })
+  }
+}
+
+
+//productListController 
+export const productList = async (req, res) => {
+  try {
+    const perPage =6;
+    const page = req.params.page || 1;
+    const products = await Product.find({}).skip((page - 1) * perPage).limit(perPage);
+    res.status(200).json({
+      success: true,
+      products,
+      message: "Products fetched successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Error in fetching products",
+      error: error.message,
+    });
+  }
+}
+
+
+
+
 
 
