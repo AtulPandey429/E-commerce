@@ -6,12 +6,14 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
-
+import { SearchProvider } from "./context/SearchContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <SearchProvider>
   <AuthContextProvider>
     <BrowserRouter>
       <App />
       <ToastContainer/>
     </BrowserRouter>
   </AuthContextProvider>
+  </SearchProvider>
 );

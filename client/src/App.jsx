@@ -19,12 +19,17 @@ import CreateCategory from "./pages/admin/CreateCategory";
 import CreateProduct from "./pages/admin/CreateProduct";
 import Products from "./pages/admin/Products";
 import UpdateProduct from "./pages/admin/UpadateProduct";
+import SearchResult from "./pages/SearchResult";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/product-detail/:slug" element={<ProductDetail />} />
+
+        <Route path="/search" element={<SearchResult />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
@@ -39,6 +44,7 @@ function App() {
           <Route path="admin/update-product/:slug" element={<UpdateProduct/>} />
         </Route>
         <Route path="/login" element={<Login />} />
+        
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

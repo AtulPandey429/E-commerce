@@ -59,7 +59,9 @@ export const createProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({}).limit(12).sort({ createdAt: -1 });
+    const products = await Product.find({}).populate("category")
+    .limit(12)
+    .sort({ createdAt: -1 });
     res.status(200).send({
       totalProducts: products.length,
       success: true,
@@ -81,7 +83,8 @@ export const getAllProducts = async (req, res) => {
 export const getSingleProduct = async (req, res) => {
   try {
     const { slug } = req.params;
-    const product = await Product.findOne({ slug });
+    const product = await Product.findOne({ slug:slug })
+    .populate("category");
     if (!product) {
       return res.status(404).send({
         success: false,
@@ -274,6 +277,29 @@ export const productList = async (req, res) => {
   }
 }
 
+
+//productSearchController 
+export const productSearch = async (req, res) => {
+  try {
+    const {keyword} = req.params;
+    const results =await Product.find({
+      $or:[
+        {name:{ $regex: keyword, $options: 'i' }},
+        {description:{ $regex: keyword, $options: 'i' }},
+      ]
+    });
+     res.json(results)
+    
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:"Error in fetching products",
+      error:error.message,
+
+    })
+    
+  }
+}
 
 
 

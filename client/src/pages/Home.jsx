@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import  { useState, useEffect, useCallback } from 'react';
 import ecommerce from '../../public/images/ecommerce.jpg';
 import Layout from '../components/Layout/Layout';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Prices } from '../components/spinner/Prices';
 import { Radio } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -14,6 +15,7 @@ const Home = () => {
   const [total, setTotal] = useState(0); 
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
+  const navigate = useNavigate();
 
   // Fetch total number of products
   const getTotal = async () => {
@@ -105,6 +107,18 @@ const Home = () => {
     }
   };
 
+  // const searchResult = async(keyword) => {
+  //   try {
+  //     const { data } = await axios.get(`http://localhost:7070/api/v1/product/product-search/${keyword}`);
+  //     if (data.success) {
+  //       setProducts(data.products);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     toast.error('Failed to search products');
+  //   }
+  // }
+
   useEffect(() => {
     getTotal();
     getAllCategories();
@@ -115,7 +129,7 @@ const Home = () => {
     if (page > 1 || checked.length > 0 || price.length > 0) {
       productFilter();
     }
-  }, [page, checked, price]);
+  }, [page, checked, price, productFilter]);
 
   return (
     <Layout title={'HomePage'}>
@@ -152,6 +166,7 @@ const Home = () => {
                 ))}
               </Radio.Group>
             </div>
+              <button className='btn btn-danger' onClick={()=>window.location.reload()}>Reset Filter</button>
           </div>
           <div className="col-md-9">
             <h3>All Products</h3>
@@ -167,8 +182,10 @@ const Home = () => {
                     />
                     <div className="card-body">
                       <h5 className="card-title">{p.name}</h5>
-                      <p className="card-text">{p.description}</p>
+                      <p className="card-text">Description:{p.description}</p>
                       <p className="card-text">Price: ${p.price}</p>
+                      <button className="btn btn-primary ms-1" onClick={()=>navigate(`/product-detail/${p.slug}`)}>More Details</button>
+                    <button className="btn btn-secondary ms-1">ADD TO CART</button>
                     </div>
                   </div>
                 </div>

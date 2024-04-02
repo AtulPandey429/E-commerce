@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import SearchInputForm from "../../pages/admin/form/SearchInputForm";
 
 const Navbar = () => {
   const [auth, setauth] = useAuth();
@@ -38,10 +39,14 @@ const Navbar = () => {
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
+              <SearchInputForm/>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/" className="nav-link ">
                   Home
                 </NavLink>
               </li>
+              
               <li className="nav-item">
                 <NavLink to="/category" className="nav-link ">
                   category
