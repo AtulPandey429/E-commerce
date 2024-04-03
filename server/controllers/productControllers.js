@@ -2,6 +2,7 @@ import Product from "../models/productModel.js";
 import slugify from "slugify";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import mongoose from "mongoose";
+import Category from "../models/createCategory.js";
 
 
 export const createProduct = async (req, res) => {
@@ -301,7 +302,46 @@ export const productSearch = async (req, res) => {
   }
 }
 
+//relatedproduct controller 
+export const relatedProduct = async (req, res) => {
+  try {
+    const {id,category_id} = req.params;
+    const products = await Product.find({
+     _id:{$ne:id},
+     category:category_id, 
+    }).limit(4).populate("category");
+    res.status(200).json({  
+      success:true,
+      products,
+      message:"Related products fetched successfully",
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:"Error in fetching products",
+      error:error.message,
+  })
+  }
+}
 
-
+//getProduct by category 
+export const getProductByCategory = async (req, res) => {
+  try {
+     const category = await Category.findOne({slug:req.params.slug});
+    const products = await Product.find({ category}).populate("category");
+    res.status(200).json({
+      success: true,
+      category,
+      products,
+      message: "Products fetched successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error in fetching products",
+      error: error.message,
+    });
+  }
+}
 
 
