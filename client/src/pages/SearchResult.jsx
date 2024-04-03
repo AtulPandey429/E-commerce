@@ -1,6 +1,7 @@
 // import { useEffect, useState } from "react";
 import { useSearch } from "../context/SearchContext";
 import Layout from "../components/Layout/Layout";
+import ProductCard from "../components/Product/ProductCard";
 
 const Search = () => {
     const [values, setValues] = useSearch();
@@ -16,22 +17,7 @@ const Search = () => {
             </h6>
             <div className="d-flex flex-wrap mt-4">
               {values?.results.map((p) => (
-                <div key={p._id} className="card m-2" style={{ width: "18rem" }}>
-                  <img
-                    src={p.photo}
-                    className="card-img-top"
-                    alt={p.name}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{p.name}</h5>
-                    <p className="card-text">
-                      {p.description.substring(0, 30)}...
-                    </p>
-                    <p className="card-text"> $ {p.price}</p>
-                    <button className="btn btn-primary ms-1">More Details</button>
-                    <button className="btn btn-secondary ms-1">ADD TO CART</button>
-                  </div>
-                </div>
+               <ProductCard key={p._id} product={p} />
               ))}
             </div>
           </div>

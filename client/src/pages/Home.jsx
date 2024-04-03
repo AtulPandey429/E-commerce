@@ -5,7 +5,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Prices } from '../components/spinner/Prices';
 import { Radio } from 'antd';
-import { useNavigate } from 'react-router-dom';
+
+import ProductCard from '../components/Product/ProductCard';
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -15,7 +16,7 @@ const Home = () => {
   const [total, setTotal] = useState(0); 
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
-  const navigate = useNavigate();
+
 
   // Fetch total number of products
   const getTotal = async () => {
@@ -172,23 +173,7 @@ const Home = () => {
             <h3>All Products</h3>
             <div className="row">
               {products.map((p, index) => (
-                <div key={p._id || index} className="col-md-4 mb-3">
-                  <div className="card h-100">
-                    <img
-                      src={p.photo}
-                      alt=""
-                      className="card-img-top"
-                      style={{ height: '200px', objectFit: 'cover' }}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{p.name}</h5>
-                      <p className="card-text">Description:{p.description}</p>
-                      <p className="card-text">Price: ${p.price}</p>
-                      <button className="btn btn-primary ms-1" onClick={()=>navigate(`/product-detail/${p.slug}`)}>More Details</button>
-                    <button className="btn btn-secondary ms-1">ADD TO CART</button>
-                    </div>
-                  </div>
-                </div>
+                <ProductCard key={p._id || index} product={p} />
               ))}
             </div>
             <div className="m-2 p-3">
