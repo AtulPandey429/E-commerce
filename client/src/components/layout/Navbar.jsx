@@ -1,24 +1,36 @@
-import React from "react";
+
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import SearchInputForm from "../../pages/admin/form/SearchInputForm";
+import useCategory from "../../hooks/CategoryHook";
+import { useCart } from "../../context/CartContext";
+import { Badge } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+
 
 const Navbar = () => {
-  const [auth, setauth] = useAuth();
-  const handlelogout = () => {
-    setauth({
+  const category = useCategory();
+  const [auth, setAuth] = useAuth();
+  const [cart,setCart] = useCart();
+
+  const handleLogout = () => {
+    setAuth({
       ...auth,
       user: null,
       token: "",
     });
     localStorage.removeItem("auth");
-    toast.success("successfully logged out");
+    toast.success("Successfully logged out");
   };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid ">
+        <div className="container-fluid">
+          <Link to="/" className="navbar-brand">
+            🛒E-Commerce
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -30,31 +42,41 @@ const Navbar = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div
-            className=" m-2 collapse navbar-collapse"
-            id="navbarTogglerDemo01"
-          >
-            <Link to="/" className="navbar-brand">
-              🛒E-Commerce
-            </Link>
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-              <SearchInputForm/>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/" className="nav-link ">
+          <div className="collapse navbar-collapse justify-content-between" id="navbarTogglerDemo01">
+            
+            <SearchInputForm />
+            <ul className="navbar-nav">
+            <li className="nav-item">
+                <NavLink to="/" className="nav-link">
                   Home
                 </NavLink>
               </li>
-              
-              <li className="nav-item">
-                <NavLink to="/category" className="nav-link ">
-                  category
+              <li className="nav-item dropdown">
+                <NavLink
+                  to="/category"
+                  className="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Category
                 </NavLink>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <Link to={`/category`} className="dropdown-item">
+                        All Category
+                      </Link>
+                  {category.map((c) => (
+                    <li key={c._id}>
+                      <Link to={`/category/${c.slug}`} className="dropdown-item">
+                        {c.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
               {!auth.user ? (
                 <>
-                  {" "}
                   <li className="nav-item">
                     <NavLink to="/register" className="nav-link">
                       Register
@@ -67,41 +89,39 @@ const Navbar = () => {
                   </li>
                 </>
               ) : (
-                <div className="dropdown">
-                  <li
-                    className="dropdown-toggle nav-link"
-                    type="button"
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdownMenuLink"
+                    role="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    {auth?.user.name}
-                  </li>
-                  <ul className="dropdown-menu">
-                    <li className="dropdown-item">
+                    {auth.user.name}
+                  </a>
+                  <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li>
                       <NavLink
-                        to={`/dashboard/${
-                          auth.user.role === 1 ? "admin" : "user"
-                        }`}
-                        className="nav-link"
+                        to={`/dashboard/${auth.user.role === 1 ? "admin" : "user"}`}
+                        className="dropdown-item"
                       >
                         Dashboard
                       </NavLink>
                     </li>
-                    <li className="dropdown-item">
-                      <NavLink
-                        onClick={handlelogout}
-                        to="/login"
-                        className="nav-link"
-                      >
+                    <li>
+                      <NavLink to="/login" className="dropdown-item" onClick={handleLogout}>
                         Logout
                       </NavLink>
                     </li>
                   </ul>
-                </div>
+                </li>
               )}
               <li className="nav-item">
                 <NavLink to="/cart" className="nav-link">
-                  Cart(0)
+                <Badge count={cart.length} overflowCount={99}>
+              <ShoppingCartOutlined style={{ fontSize: '30px' }} />
+            </Badge>
                 </NavLink>
               </li>
             </ul>

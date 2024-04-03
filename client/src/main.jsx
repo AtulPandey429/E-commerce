@@ -7,7 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./context/AuthContext";
 import { SearchProvider } from "./context/SearchContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <CartProvider>
   <SearchProvider>
   <AuthContextProvider>
     <BrowserRouter>
@@ -16,4 +18,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </AuthContextProvider>
   </SearchProvider>
+  </CartProvider>
 );
