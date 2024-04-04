@@ -130,3 +130,40 @@ export const forgetPassword = async (req, res) => {
       .send({ success: false, message: "error in forgetpassword" });
   }
 };
+
+//update profile controller 
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, email, mobile, address, password } = req.body;
+    if (!name || !email || !mobile || !address ) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
+    }
+
+    // Hash the password if it's provided
+    let hashedPassword;
+    if (password) {
+      hashedPassword = await hashpassword(password);
+    }
+
+    // Update the user profile
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, email, mobile, address, password: hashedPassword },
+      { new: true } // Return the updated document
+    );
+
+    // Check if the user exists
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};

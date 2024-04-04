@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, loginUser, forgetPassword } from "../controllers/authControllers.js";
+import { registerUser, loginUser, forgetPassword, updateProfile } from "../controllers/authControllers.js";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
 
 const routes = express.Router();
@@ -20,4 +20,9 @@ routes.get("/admin-auth", requireSignIn,isAdmin, (req, res) => {
 });
 //forgetPassword route
 routes.post("/forgotpassword", forgetPassword);
+
+// route to update userprofile
+routes.put("/user-profile", requireSignIn, updateProfile);
+
+
 export default routes;
