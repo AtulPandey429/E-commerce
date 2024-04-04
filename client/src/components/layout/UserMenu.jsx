@@ -3,22 +3,25 @@ import { NavLink } from "react-router-dom";
 
 const UserMenue = () => {
   return (
-    <div>
+    <div className="bg-light p-4 rounded">
+      <h5 className="mb-3">Menu</h5>
       <ul className="list-group">
-        <li className="list-group-item list-group-item-warning ">
+        <li className="list-group-item border-0">
           <NavLink
             to="/dashboard/user/profile"
             className="text-dark"
-            style={{ textDecoration: "none", borderBottom: "0" }}
+            style={{ textDecoration: "none" }}
+            activeClassName="fw-bold"
           >
             Profile
           </NavLink>
         </li>
-        <li className="list-group-item list-group-item-primary ">
+        <li className="list-group-item border-0">
           <NavLink
             to="/dashboard/user/order"
             className="text-dark"
-            style={{ textDecoration: "none", borderBottom: "0" }}
+            style={{ textDecoration: "none" }}
+            activeClassName="fw-bold"
           >
             Order
           </NavLink>
