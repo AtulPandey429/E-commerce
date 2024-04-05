@@ -6,7 +6,7 @@ import Spinner from "./../spinner/Spinner";
 
 const PrivateRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
 
   const checkAuthentication = async () => {
     try {

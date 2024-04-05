@@ -13,7 +13,7 @@ const UserProfile = () => {
   const [address, setAddress] = useState("");
   
   const navigate = useNavigate();
-  const [auth] = useAuth();
+  const [auth,setAuth] = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +30,7 @@ const UserProfile = () => {
       );
 
       if (response.data.success) {
+        setAuth({...auth,user:userData})
         // Update user information in context or local storage if needed
         navigate("/dashboard/user"); // Redirect to the dashboard page
       } else {
@@ -49,7 +50,7 @@ const UserProfile = () => {
       setMobile(mobile);
       setAddress(address);
     }
-  }, [auth?.user]);
+  }, [auth.user]);
 
   return (
     <Layout>
