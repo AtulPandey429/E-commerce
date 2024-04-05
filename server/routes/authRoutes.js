@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, loginUser, forgetPassword, updateProfile } from "../controllers/authControllers.js";
+import { registerUser, loginUser, forgetPassword, updateProfile, orderStatusController, getAllOrdersController, getOrdersController } from "../controllers/authControllers.js";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
 
 const routes = express.Router();
@@ -23,6 +23,19 @@ routes.post("/forgotpassword", forgetPassword);
 
 // route to update userprofile
 routes.put("/user-profile", requireSignIn, updateProfile);
+
+routes.get("/orders", requireSignIn, getOrdersController);
+
+//all orders
+routes.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController);
+
+// order status update
+routes.put(
+  "/order-status/:orderId",
+  requireSignIn,
+  isAdmin,
+  orderStatusController
+);
 
 
 export default routes;

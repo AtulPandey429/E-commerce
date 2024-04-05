@@ -1,6 +1,6 @@
 import express from "express";
 import { isAdmin, requireSignIn } from "./../middlewares/authMiddlewares.js";
-import { createProduct, deleteProduct, getAllProducts, getCloudinaryphoto, getProductByCategory, getSingleProduct, productCount, productFilter, productList,  productSearch,  relatedProduct,  updateProduct } from "../controllers/productControllers.js";
+import { brainTreePaymentController, braintreeTokenController, createProduct, deleteProduct, getAllProducts, getCloudinaryphoto, getProductByCategory, getSingleProduct, productCount, productFilter, productList,  productSearch,  relatedProduct,  updateProduct } from "../controllers/productControllers.js";
 import upload from "../utils/multer.js";
 
 const routes = express.Router();
@@ -34,5 +34,10 @@ routes.get('/product-perpage/:page', productList);
 routes.get('/product-search/:keyword', productSearch);
 routes.get('/similar-product/:id/:category_id',relatedProduct)
 routes.get('/product-bycategory/:slug',getProductByCategory)
+//payments routes
+//token
+routes.get("/braintree/token", braintreeTokenController);
 
+//payments
+routes.post("/braintree/payment", requireSignIn, brainTreePaymentController);
 export default routes;
