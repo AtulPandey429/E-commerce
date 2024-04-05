@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import { useLocation, useNavigate } from "react-router";
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,12 +6,14 @@ import "./Auth.css";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [auth, setauth] = useAuth();
+  const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,20 +24,30 @@ const Login = () => {
       );
 
       if (response.data.success) {
-        toast.success(response.data.message || "login ");
-        setauth({
+        toast.success(response.data.message || "Login successful");
+
+        // Update the auth context with user data and token
+        setAuth({
           ...auth,
           user: response.data.user,
           token: response.data.token,
         });
+
+        // Store auth data in local storage
         localStorage.setItem("auth", JSON.stringify(response.data));
-        navigate(location.state || "/");
+
+        // Redirect the user back to the previous location if available
+        if (location.state && location.state.from) {
+          navigate(location.state.from);
+        } else {
+          navigate("/"); // Redirect to home page if no previous location
+        }
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data.message || "Login failed");
       }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again later.");
-      console.log(error); // Log for debugging
+      console.error(error); // Log for debugging
     }
   };
 
@@ -76,7 +88,7 @@ const Login = () => {
               Login
             </button>
             <button
-              type="submit"
+              type="button"
               onClick={() => navigate("/forgotpassword")}
               className="col m-2 rounded btn btn-success"
             >

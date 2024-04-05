@@ -1,45 +1,25 @@
 // AuthContext.js
-import axios from "axios";
-import  { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthCreateContext = createContext();
+const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-  const [auth, setAuth] = useState({
-    user: null,
-    token: "",
+  const [auth, setAuth] = useState(() => {
+    const storedAuth = localStorage.getItem("auth");
+    return storedAuth ? JSON.parse(storedAuth) : { user: null, token: "" };
   });
 
-  // header
-  axios.defaults.headers.common["Authorization"] = auth?.token;
   useEffect(() => {
-    const data = localStorage.getItem("auth");
-    if (data) {
-      const parseData = JSON.parse(data);
-      setAuth({
-        ...auth,
-        user: parseData.user,
-        token: parseData.token,
-      });
-    }
-  }, []);
+    localStorage.setItem("auth", JSON.stringify(auth));
+  }, [auth]);
 
   return (
-    <AuthCreateContext.Provider value={[auth, setAuth]}>
+    <AuthContext.Provider value={[auth, setAuth]}>
       {children}
-    </AuthCreateContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
-// useAuth should be used within a functional component
-const useAuth = () => {
-  const contextValue = useContext(AuthCreateContext);
-
-  if (!contextValue) {
-    throw new Error("useAuth must be used within an AuthContextProvider");
-  }
-
-  return contextValue;
-};
+const useAuth = () => useContext(AuthContext);
 
 export { useAuth, AuthContextProvider };

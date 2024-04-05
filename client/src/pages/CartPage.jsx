@@ -9,21 +9,25 @@ const CartPage = () => {
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
   const location = useLocation(); // Access the current location object
-  const [redirecting, setRedirecting] = useState(false);
+ 
 
   // Calculate total price
   const total = cart.reduce((acc, c) => acc + c.price, 0);
 
   useEffect(() => {
+    
+  
     if (!auth.user) {
-      setRedirecting(true);
+     
       setTimeout(() => {
         navigate('/login', { state: { from: location } }); // Pass the current location as state
       }, 2000); // Delay in milliseconds
     }
-  }, [auth, navigate, location]);
+  }, [auth.user, navigate, location]);
 
   // Function to handle item removal
+  
+  
   const handleRemove = (cartId) => {
     setCart(prevCart => prevCart.filter(c => c._id !== cartId));
   };
@@ -39,12 +43,8 @@ const CartPage = () => {
     <span className="cart-item-text">Items</span>
   </div>
 </div>
-        {redirecting && (
-          <div className="alert alert-warning" role="alert">
-            Redirecting to login page... Please login first.
-          </div>
-        )}
-        {auth && auth.user && (
+      
+        { auth?.user ? (
           <div className="row">
             <div className="col-md-8">
               {cart?.map((item) => (
@@ -75,7 +75,10 @@ const CartPage = () => {
               </div>
             </div>
           </div>
-        )}
+        ):(<div className="alert alert-warning" role="alert">
+        Redirecting to login page... Please login first.
+      </div>)}
+         
       </div>
     </Layout>
   );
