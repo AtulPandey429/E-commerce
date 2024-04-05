@@ -5,7 +5,7 @@ import Layout from "../components/Layout/Layout";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const CartPage = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
   const location = useLocation(); // Access the current location object
