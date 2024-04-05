@@ -1,4 +1,5 @@
 import { comparePassword, hashpassword } from "../helper/authHelper.js";
+import orderModal from "../models/orderModal.js";
 import User from "../models/userModel.js";
 import JWT from "jsonwebtoken";
 
@@ -165,5 +166,62 @@ export const updateProfile = async (req, res) => {
   } catch (error) {
     console.error("Error updating profile:", error);
     return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
+export const getOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModal
+      .find({ buyer: req.user._id })
+      .populate("products", "-photo")
+      .populate("buyer", "name");
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error WHile Geting Orders",
+      error,
+    });
+  }
+};
+//orders
+export const getAllOrdersController = async (req, res) => {
+  try {
+    const orders = await orderModal
+      .find({})
+      .populate("products", "-photo")
+      .populate("buyer", "name")
+      .sort({ createdAt: "-1" });
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error WHile Geting Orders",
+      error,
+    });
+  }
+};
+
+//order status
+export const orderStatusController = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    const orders = await orderModal.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error While Updateing Order",
+      error,
+    });
   }
 };

@@ -3,6 +3,19 @@ import slugify from "slugify";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import mongoose from "mongoose";
 import Category from "../models/createCategory.js";
+import Order from "../models/orderModal.js";
+import braintree from "braintree";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+//payment gateway
+const gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+});
 
 
 export const createProduct = async (req, res) => {
@@ -344,4 +357,66 @@ export const getProductByCategory = async (req, res) => {
   }
 }
 
+
+//payment gateway api
+//token
+// Controller for generating client token
+export const braintreeTokenController = async (req, res) => {
+  try {
+    // Generate client token
+    gateway.clientToken.generate({}, (err, response) => {
+      if (err) {
+        throw err; // Throw error for async handling
+      }
+      res.send(response);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
+
+// Controller for processing payments
+// Controller for processing payments
+// Controller for processing payments
+export const brainTreePaymentController = async (req, res) => {
+  try {
+    const { nonce, cart } = req.body;
+
+    // Check if cart is missing or invalid
+    if (!cart || !Array.isArray(cart) || cart.length === 0) {
+      return res.status(400).json({ error: 'Cart is missing or invalid' });
+    }
+
+    // Calculate total price
+    const total = cart.reduce((acc, item) => acc + item.price, 0);
+
+    // Create new transaction
+    gateway.transaction.sale(
+      {
+        amount: total.toFixed(2), // Ensure the amount is properly formatted
+        paymentMethodNonce: nonce,
+        options: {
+          submitForSettlement: true,
+        },
+      },
+      (error, result) => {
+        if (error) {
+          throw error; // Throw error for async handling
+        }
+        // If successful, save order details
+        const order = new Order({
+          products: cart,
+          payment: result,
+          buyer: req.user._id,
+        });
+        order.save();
+        res.json({ ok: true });
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
