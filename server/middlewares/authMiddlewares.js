@@ -1,5 +1,5 @@
 import JWT from "jsonwebtoken";
-import User from "../models/userModel.js";
+import {User} from "../models/userModel.js";
 
 export const requireSignIn = async (req, res, next) => {
   try {

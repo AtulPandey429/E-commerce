@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import ImageComponent from './Image';
 
 const ProductCard = ({ product, index }) => {
   const navigate = useNavigate();
@@ -21,11 +22,7 @@ const ProductCard = ({ product, index }) => {
   return (
     <div key={product._id || index} className="col-md-4 mb-3">
       <div className="card h-100">
-        <img
-          src={product.photo}
-          alt=""
-          className="card-img-top"
-        />
+       <ImageComponent src={product.photo} alt={product.name} id={product._id} />
         <div className="card-body">
           <h5 className="card-title">{product.name}</h5>
           <p className="card-text">Description: {product.description}</p>

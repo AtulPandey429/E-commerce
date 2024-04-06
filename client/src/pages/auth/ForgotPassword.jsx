@@ -2,7 +2,7 @@ import  { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import Layout from "../../components/layout/Layout";
+import Layout from "../../components/Layout/Layout";
 import "./Auth.css"; // Import your custom CSS file
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

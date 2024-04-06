@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios"; // Don't forget to import axios
 
-
 const Message = styled.h2`
   color: ${(props) => (props.hasItems ? "#00cc00" : "#ff0000")};
   font-size: 1.5rem;
@@ -70,7 +69,7 @@ const CartPage = () => {
       setCart([]);
       navigate("/dashboard/user/order");
       console.log("Payment Response:", response.data); // Debugging: Log the payment response
-      
+
       // Check the condition based on response status or data
       if (response.status === 200 && response.data.success) {
         console.log("Payment Completed Successfully");
@@ -93,8 +92,6 @@ const CartPage = () => {
       // Handle error condition
     }
   };
-  
-  
 
   return (
     <Layout title="Your Cart">
@@ -174,6 +171,8 @@ const CartPage = () => {
                       ""
                     ) : (
                       <>
+                      <div className="m-2">
+
                         <DropIn
                           options={{
                             authorization: clientToken,
@@ -183,14 +182,14 @@ const CartPage = () => {
                           }}
                           onInstance={(newInstance) => setInstance(newInstance)}
                         />
-
                         <button
-                          className="btn btn-primary"
+                          className="btn btn-primary m-3"
                           onClick={handlePayment}
                           disabled={loading || !instance || !auth?.user?.address}
                         >
                           {loading ? "Processing ...." : "Make Payment"}
                         </button>
+                      </div>
                       </>
                     )}
                   </div>

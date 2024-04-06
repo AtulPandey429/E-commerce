@@ -1,9 +1,9 @@
-import Product from "../models/productModel.js";
+import {Product} from "../models/productModel.js";
 import slugify from "slugify";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import mongoose from "mongoose";
-import Category from "../models/createCategory.js";
-import Order from "../models/orderModal.js";
+import {Category} from "../models/createCategory.js";
+import {Order} from "../models/orderModal.js";
 import braintree from "braintree";
 import dotenv from "dotenv";
 

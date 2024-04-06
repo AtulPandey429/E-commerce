@@ -1,6 +1,6 @@
 import  { useState, useEffect } from 'react';
-import Layout from './../../components/Layout/Layout';
-import AdminMenu from './../../components/Layout/AdminMenu';
+import Layout from '../../components/Layout/Layout';
+import AdminMenu from '../../components/Layout/AdminMenu';
 import {  Modal, Form, Input, Select, Button } from 'antd';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';

@@ -10,7 +10,7 @@ const category = new mongoose.Schema({
     type: String,
     lowercase:true,
   },
-});
+},{ timestamps: true });
 
 const Category = mongoose.model("Category", category);
-export default Category;
+export {Category};

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
-import UserMenue from "../../components/layout/UserMenu";
+import UserMenue from "../../components/Layout/UserMenu";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

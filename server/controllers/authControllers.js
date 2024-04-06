@@ -1,6 +1,6 @@
 import { comparePassword, hashpassword } from "../helper/authHelper.js";
-import orderModal from "../models/orderModal.js";
-import User from "../models/userModel.js";
+import {Order} from "../models/orderModal.js";
+import {User} from "../models/userModel.js";
 import JWT from "jsonwebtoken";
 
 //register Post req
@@ -132,6 +132,7 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
+
 //update profile controller 
 export const updateProfile = async (req, res) => {
   try {
@@ -169,12 +170,22 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+// getAllUsers 
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 
 export const getOrdersController = async (req, res) => {
   try {
-    const orders = await orderModal
-      .find({ buyer: req.user._id })
-      .populate("products", "-photo")
+    const orders = await Order.find({ buyer: req.user._id })
+      .populate("products")
       .populate("buyer", "name");
     res.json(orders);
   } catch (error) {
@@ -189,11 +200,10 @@ export const getOrdersController = async (req, res) => {
 //orders
 export const getAllOrdersController = async (req, res) => {
   try {
-    const orders = await orderModal
-      .find({})
-      .populate("products", "-photo")
+    const orders = await Order.find({})
+      .populate("products")
       .populate("buyer", "name")
-      .sort({ createdAt: "-1" });
+      .sort({ createdAt: -1 }).exec();
     res.json(orders);
   } catch (error) {
     console.log(error);
@@ -210,7 +220,7 @@ export const orderStatusController = async (req, res) => {
   try {
     const { orderId } = req.params;
     const { status } = req.body;
-    const orders = await orderModal.findByIdAndUpdate(
+    const orders = await Order.findByIdAndUpdate(
       orderId,
       { status },
       { new: true }

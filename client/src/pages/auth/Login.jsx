@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Layout from "../../components/layout/Layout";
+import  { useState } from "react";
+import Layout from "../../components/Layout/Layout";
 import { useLocation, useNavigate } from "react-router";
 import 'react-toastify/dist/ReactToastify.css';
 import "./Auth.css";

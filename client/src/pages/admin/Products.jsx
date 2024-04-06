@@ -1,10 +1,11 @@
 // Import useState, useEffect, and useCallback hooks from React
 import { useState, useEffect, useCallback } from "react";
 import AdminMenu from "../../components/Layout/AdminMenu";
-import Layout from "./../../components/Layout/Layout";
+import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import ImageComponent from "../../components/Product/Image";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -58,7 +59,7 @@ const Products = () => {
           <div className="d-flex flex-wrap">
             {products.map((p) => (
               <div key={p._id} className="card m-2" style={{ width: "18rem" }}>
-                <img src={p.photo} className="card-img-top" alt={p.name} />
+                <ImageComponent src={p.photo}  alt={p.name} id={p._id} />
                 <div className="card-body">
                   <h5 className="card-title">{p.name}</h5>
                   <p className="card-text">Price: ${p.price}</p>

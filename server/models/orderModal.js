@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema(
     payment: {},
     buyer: {
       type: mongoose.ObjectId,
-      ref: "user",
+      ref: "User",
     },
     status: {
       type: String,
@@ -22,4 +22,5 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
+export {Order};
