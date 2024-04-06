@@ -11,7 +11,7 @@ const UserMenue = () => {
             to="/dashboard/user/profile"
             className="text-dark"
             style={{ textDecoration: "none" }}
-            activeClassName="fw-bold"
+            activeclassname="fw-bold"
           >
             Profile
           </NavLink>
@@ -21,7 +21,7 @@ const UserMenue = () => {
             to="/dashboard/user/order"
             className="text-dark"
             style={{ textDecoration: "none" }}
-            activeClassName="fw-bold"
+            activeclassname="fw-bold"
           >
             Order
           </NavLink>

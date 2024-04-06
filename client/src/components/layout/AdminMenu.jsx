@@ -6,13 +6,18 @@ const AdminMenu = () => {
     <div className="admin-menu-container">
       <ul className="admin-menu-list">
         <li className="admin-menu-item">
-          <NavLink to="" className="admin-menu-link">
-            Create User
+          <NavLink to="/dashboard/admin" className="admin-menu-link">
+            All User
           </NavLink>
         </li>
         <li className="admin-menu-item">
           <NavLink to="/dashboard/admin/create-products" className="admin-menu-link">
             Create Product
+          </NavLink>
+        </li>
+        <li className="admin-menu-item">
+          <NavLink to="/dashboard/admin/edit-order" className="admin-menu-link">
+            Edit Order
           </NavLink>
         </li>
        
