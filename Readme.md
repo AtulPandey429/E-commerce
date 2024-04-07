@@ -45,12 +45,12 @@ To run this project locally, follow these steps:
    git clone https://github.com/AtulPandey429/E-commerce.git
    cd ecommerce-website
 2. Install dependencies:
-
+```bash
        npm install
 
 3.Set up environment variables:
 Create a .env file in the root directory and add the following variables:
-
+```bash
   PORT=5000
   MONGODB_URI=''
   JWT_SECRET=your_jwt_secret
