@@ -17,33 +17,6 @@ To run this project locally, follow these steps:
    ```bash
    git clone https://github.com/your-username/ecommerce-website.git
    cd ecommerce-website
-2.Install dependencies:
-  npm install
-
-  3.
-Certainly! Here's the complete README.md file with all the content and formatting:
-
-markdown
-Copy code
-# E-Commerce Website
-
-## Overview
-This project is an e-commerce website developed using the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to browse products, add them to the cart, and make purchases securely. The website includes features such as user authentication using JWT, password hashing using bcrypt, and payment integration using MindTree.
-
-## Features
-- User authentication with JWT (JSON Web Tokens)
-- Secure password hashing with bcrypt
-- Browse products, add to cart, and make purchases
-- Responsive and user-friendly UI components using Ant Design (antd)
-- Integration with MindTree for secure payment processing
-
-## Installation
-To run this project locally, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AtulPandey429/E-commerce.git
-   cd ecommerce-website
 2. Install dependencies:
 ```bash
        npm install
