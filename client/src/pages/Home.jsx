@@ -134,8 +134,8 @@ const Home = () => {
 
   return (
     <Layout title={'HomePage'}>
-      <div className="row">
-        <img src={ecommerce} alt="" style={{height:'250px'}}/>
+      <div className="row " >
+        <img src='https://res.cloudinary.com/e-com-mern/image/upload/v1712478100/ecommerceImage/aussvejqw882ejlssybu.jpg' alt="" style={{height:'270px'}}/>
       </div>
       <div className="container">
         <div className="row mt-4">
