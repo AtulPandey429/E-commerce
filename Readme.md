@@ -6,6 +6,14 @@ This project is an e-commerce website developed using the MERN stack (MongoDB, E
 -WebUI looks like
 ![E-Commerce Website](ecom.png)
 
+
+-Admin Account
+-Email: admin@gmail.com
+-Password: admin
+
+- admin can manage crud operation on product,category by this account
+
+
 ## Features
 - User authentication with JWT (JSON Web Tokens)
 - Secure password hashing with bcrypt
