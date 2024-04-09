@@ -14,7 +14,7 @@ const ProductDetail = () => {
 
   const getProduct = async () => {
     try {
-      const res = await axios.get(`http://localhost:7070/api/v1/product/get-product/${params.slug}`);
+      const res = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/get-product/${params.slug}`);
       setProduct(res.data.product);
       getSimilarProducts(res.data.product._id, res.data.product.category._id);
     } catch (error) {
@@ -24,7 +24,7 @@ const ProductDetail = () => {
 
   const getSimilarProducts = async (id, category_id) => {
     try {
-      const { data } = await axios.get(`http://localhost:7070/api/v1/product/similar-product/${id}/${category_id}`);
+      const { data } = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/similar-product/${id}/${category_id}`);
 
       if (data?.success) {
         setRelatedProducts(data?.products);

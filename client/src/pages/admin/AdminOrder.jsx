@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -23,7 +24,7 @@ const AdminOrders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:7070/api/v1/auth/all-orders");
+      const { data } = await axios.get("https://shopify-x-backend.onrender.com/api/v1/auth/all-orders");
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -32,7 +33,7 @@ const AdminOrders = () => {
 
   const handleChange = async (orderId, value) => {
     try {
-      await axios.put(`http://localhost:7070/api/v1/auth/order-status/${orderId}`, {
+      await axios.put(`https://shopify-x-backend.onrender.com/api/v1/auth/order-status/${orderId}`, {
         status: value,
       });
       getOrders();

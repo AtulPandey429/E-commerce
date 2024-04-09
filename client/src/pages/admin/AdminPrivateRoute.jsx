@@ -12,7 +12,7 @@ const AdminPrivateRoute = () => {
   const checkAuthentication = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7070/api/v1/auth/admin-auth"
+        "https://shopify-x-backend.onrender.com/api/v1/auth/admin-auth"
       );
       const isOk = response.data.ok;
       setIsAuthenticated(isOk);

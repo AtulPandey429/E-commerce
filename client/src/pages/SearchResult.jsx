@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import { useEffect, useState } from "react";
 import { useSearch } from "../context/SearchContext";
 import Layout from "../components/Layout/Layout";

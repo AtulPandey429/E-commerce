@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:7070/api/v1/auth/forgotpassword",
+        "https://shopify-x-backend.onrender.com/api/v1/auth/forgotpassword",
         {
           email,
           newpassword: newPassword,

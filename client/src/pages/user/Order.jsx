@@ -10,7 +10,7 @@ const Orders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:7070/api/v1/auth/orders");
+      const { data } = await axios.get("https://shopify-x-backend.onrender.com/api/v1/auth/orders");
       setOrders(data);
     } catch (error) {
       console.log(error);

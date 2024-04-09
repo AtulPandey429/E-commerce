@@ -42,7 +42,7 @@ const CreateProduct = () => {
       formData.append('shipping', shipping ? '1' : '0'); // Convert boolean to string
       formData.append('file', file);
 
-      const response = await axios.post('http://localhost:7070/api/v1/product/create-product', formData);
+      const response = await axios.post('https://shopify-x-backend.onrender.com/api/v1/product/create-product', formData);
 
       if (response.data.success) {
         setIsModalVisible(false);

@@ -37,7 +37,7 @@ const CartPage = () => {
   useEffect(() => {
     const getToken = async () => {
       try {
-        const { data } = await axios.get("http://localhost:7070/api/v1/product/braintree/token");
+        const { data } = await axios.get("https://shopify-x-backend.onrender.com/api/v1/product/braintree/token");
         setClientToken(data?.clientToken);
       } catch (error) {
         console.log("Error fetching token:", error);
@@ -60,7 +60,7 @@ const CartPage = () => {
       }
       const { nonce } = await instance.requestPaymentMethod();
       console.log("Payment nonce:", nonce); // Debugging: Log the nonce
-      const response = await axios.post("http://localhost:7070/api/v1/product/braintree/payment", {
+      const response = await axios.post("https://shopify-x-backend.onrender.com/api/v1/product/braintree/payment", {
         nonce,
         cart,
       });

@@ -11,7 +11,7 @@ const Category = () => {
       <Container>
         <h1 className="mt-5 mb-4">All Categories</h1>
         <Row>
-          {categories.map(category => (
+          {categories?.map(category => (
             <Col key={category._id} xs={12} sm={6} md={4} lg={3} className="mb-4">
               <Card className="h-100">
                 <Card.Body>

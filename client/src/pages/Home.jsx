@@ -20,7 +20,7 @@ const Home = () => {
   // Fetch total number of products
   const getTotal = async () => {
     try {
-      const { data } = await axios.get('http://localhost:7070/api/v1/product/product-count');
+      const { data } = await axios.get('https://shopify-x-backend.onrender.com/api/v1/product/product-count');
       if (data.success) {
         setTotal(data.total);
         toast.success(data.message);
@@ -33,7 +33,7 @@ const Home = () => {
   // Fetch all categories
   const getAllCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:7070/api/v1/category/allcategory');
+      const response = await axios.get('https://shopify-x-backend.onrender.com/api/v1/category/allcategory');
       if (response.data.success) {
         setCategories(response.data.category);
       }
@@ -61,7 +61,7 @@ const Home = () => {
   const getAllProducts = useCallback(async (pageNumber) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`http://localhost:7070/api/v1/product/product-perpage/${pageNumber}`);
+      const { data } = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/product-perpage/${pageNumber}`);
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -73,7 +73,7 @@ const Home = () => {
   // Filter products based on checked categories and price
   const productFilter = useCallback(async () => {
     try {
-      const res = await axios.post('http://localhost:7070/api/v1/product/product-filter', {
+      const res = await axios.post('https://shopify-x-backend.onrender.com/api/v1/product/product-filter', {
         checked,
         price
       });
@@ -92,7 +92,7 @@ const Home = () => {
     try {
       setLoading(true);
       const nextPage = page + 1;
-      const { data } = await axios.get(`http://localhost:7070/api/v1/product/product-perpage/${nextPage}`);
+      const { data } = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/product-perpage/${nextPage}`);
       setLoading(false);
       if (data.products.length > 0) {
         setProducts(prevProducts => [...prevProducts, ...data.products]);
@@ -141,7 +141,7 @@ const Home = () => {
           <div className="col-md-3">
             <div className="mb-3">
               <h5>All Categories</h5>
-              {categories.map((c, index) => (
+              {categories?.map((c, index) => (
                 <div key={c._id || index} className="form-check">
                   <input
                     className="form-check-input"
@@ -171,7 +171,7 @@ const Home = () => {
           <div className="col-md-9">
             <h3>All Products</h3>
             <div className="row">
-              {products.map((p, index) => (
+              {products?.map((p, index) => (
                 <ProductCard key={p._id || index} product={p} />
               ))}
             </div>

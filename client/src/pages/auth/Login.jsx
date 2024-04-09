@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:7070/api/v1/auth/login",
+        "https://shopify-x-backend.onrender.com/api/v1/auth/login",
         { email, password }
       );
 

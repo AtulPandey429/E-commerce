@@ -34,7 +34,7 @@ const UpdateProduct = () => {
 
   const getSingleProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:7070/api/v1/product/get-product/${params.slug}`);
+      const response = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/get-product/${params.slug}`);
       if (response.data.success) {
         const { _id, name, price, description, category, quantity, shipping, photo } = response.data.product;
         setName(name);
@@ -60,7 +60,7 @@ const UpdateProduct = () => {
 
   const getAllCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:7070/api/v1/category/allcategory');
+      const response = await axios.get('https://shopify-x-backend.onrender.com/api/v1/category/allcategory');
       if (response.data.success) {
         setCategories(response.data.category);
       }
@@ -82,7 +82,7 @@ const UpdateProduct = () => {
       formData.append('shipping', shipping);
       formData.append('file', file);
 
-      const response = await axios.put(`http://localhost:7070/api/v1/product/update-product/${_id}`, formData); // Use _id for updating
+      const response = await axios.put(`https://shopify-x-backend.onrender.com/api/v1/product/update-product/${_id}`, formData); // Use _id for updating
       if (response.data.success) {
         toast.success('Product updated successfully');
         setIsModalVisible(false);
@@ -98,7 +98,7 @@ const UpdateProduct = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:7070/api/v1/product/delete-product/${_id}`);
+      const response = await axios.delete(`https://shopify-x-backend.onrender.com/api/v1/product/delete-product/${_id}`);
       if (response.data.success) {
         toast.success('Product deleted successfully');
         setIsModalVisible(false);

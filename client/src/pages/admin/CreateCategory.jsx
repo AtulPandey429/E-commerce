@@ -21,7 +21,7 @@ const CreateCategory = () => {
   const getAllCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7070/api/v1/category/allcategory"
+        "https://shopify-x-backend.onrender.com/api/v1/category/allcategory"
       );
       if (response.data.success) {
         setCategories(response.data.category);
@@ -36,7 +36,7 @@ const CreateCategory = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:7070/api/v1/category/create-category",
+        "https://shopify-x-backend.onrender.com/api/v1/category/create-category",
         { name }
       );
       if (response.data.success) {
@@ -52,7 +52,7 @@ const CreateCategory = () => {
   const handleDelete = async (categoryId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:7070/api/v1/category/deletecategory/${categoryId}`
+        `https://shopify-x-backend.onrender.com/api/v1/category/deletecategory/${categoryId}`
       );
       if (response.data.success) {
         getAllCategories();
@@ -67,7 +67,7 @@ const CreateCategory = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:7070/api/v1/category/update-category/${editCategoryId}`,
+        `https://shopify-x-backend.onrender.com/api/v1/category/update-category/${editCategoryId}`,
         { name }
       );
       if (response.data.success) {

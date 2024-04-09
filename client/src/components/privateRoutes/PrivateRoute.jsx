@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
@@ -11,7 +11,7 @@ const PrivateRoute = () => {
   const checkAuthentication = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7070/api/v1/auth/user-auth"
+        "https://shopify-x-backend.onrender.com/api/v1/auth/user-auth"
       );
       const isOk = response.data.ok;
       setIsAuthenticated(isOk);

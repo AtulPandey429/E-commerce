@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -12,7 +12,7 @@ const CategoryProduct = () => {
 
   const getProductByCategory = async () => {
     try {
-      const response = await axios.get(`http://localhost:7070/api/v1/product/product-bycategory/${params.slug}`);
+      const response = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/product-bycategory/${params.slug}`);
       if (response.data.success) {
         setProducts(response.data.products);
         setCategory(response.data.category);

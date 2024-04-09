@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+
 
 const CategoryForm = ( {name , setName, handleSubmit}) => {
   // eslint-disable-next-line react/prop-types

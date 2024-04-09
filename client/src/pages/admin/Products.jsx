@@ -30,7 +30,7 @@ const Products = () => {
   // Function to handle product deletion
   const handleDelete = async (productId) => {
     try {
-      const response = await axios.delete(`http://localhost:7070/api/v1/product/delete-product/${productId}`);
+      const response = await axios.delete(`https://shopify-x-backend.onrender.com/api/v1/product/delete-product/${productId}`);
       if (response.data.success) {
         toast.success('Product deleted successfully');
         getAllProducts(); // Reload products after deletion

@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 import { BiMailSend, BiPhoneCall, BiSupport } from "react-icons/bi";
 import Layout from "../components/Layout/Layout";

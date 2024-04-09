@@ -11,7 +11,7 @@ const Users = () => {
 
   const getAllUsers = async () => {
     try {
-      const { data } = await axios.get("http://localhost:7070/api/v1/auth/all-users");
+      const { data } = await axios.get("https://shopify-x-backend.onrender.com/api/v1/auth/all-users");
       setUsers(data);
     } catch (error) {
       toast.error("Error in getting users");

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import vitePluginImp from 'vite-plugin-imp';
+import proxy from 'vite-plugin-proxy'; // Import the proxy plugin
 
 export default defineConfig({
   plugins: [
@@ -12,7 +13,8 @@ export default defineConfig({
           style: (name) => `antd/es/${name}/style`
         }
       ]
-    })
+    }),
+    
   ],
   css: {
     modules: {

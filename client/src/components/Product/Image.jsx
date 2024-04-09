@@ -1,11 +1,11 @@
-import React from 'react';
+// import React from 'react';
 import PropTypes from 'prop-types';
 import  axios  from 'axios';
 
 const ImageComponent = ({ src, alt, id }) => {
     const handleImgClick = async (pId) => {
         try {
-          const { data } = await axios.get(`http://localhost:7070/api/v1/product/product-photo/${pId}`);
+          const { data } = await axios.get(`https://shopify-x-backend.onrender.com/api/v1/product/product-photo/${pId}`);
           const photoUrl = data.photoUrl;
           
           // Open the photo URL in a new tab

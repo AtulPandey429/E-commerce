@@ -10,11 +10,11 @@ const ProductCard = ({ product, index }) => {
   const [addingToCart, setAddingToCart] = useState(false);
 
   const addToCart = () => {
-    setAddingToCart(true); // Set addingToCart to true to show the notification
+    setAddingToCart(true); 
     setTimeout(() => {
       setCart([...cart, product]);
-      setAddingToCart(false); // Reset addingToCart after a delay
-    }, 1000); // Simulate a delay of 1 second (1000 milliseconds)
+      setAddingToCart(false); 
+    }, 1000); 
   };
 
   const isProductInCart = cart.some(item => item._id === product._id);

@@ -25,7 +25,7 @@ const UserProfile = () => {
       }
 
       const response = await axios.put(
-        'http://localhost:7070/api/v1/auth/user-profile',
+        'https://shopify-x-backend.onrender.com/api/v1/auth/user-profile',
         userData
       );
 
