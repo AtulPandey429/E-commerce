@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import ImageComponent from './Image';
@@ -27,10 +27,15 @@ const ProductCard = ({ product, index }) => {
           <h5 className="card-title">{product.name}</h5>
           <p className="card-text">Description: {product.description}</p>
           <p className="card-text">Price: ${product.price}</p>
-          <button className="btn btn-primary ms-1" onClick={() => navigate(`/product-detail/${product.slug}`)}>More Details</button>
-          <button className={`btn btn-warning ms-1 ${isProductInCart ? 'disabled' : ''}`} onClick={addToCart} disabled={isProductInCart}>
-            {isProductInCart ? 'Added to Cart' : 'ADD TO CART'}
-          </button>
+          <div className='row '>
+  <button className="col btn btn-primary m-1" onClick={() => navigate(`/product-detail/${product.slug}`)}>More Details</button>
+  <button className={`col m-1 btn btn-warning ${isProductInCart ? 'disabled' : ''}`} onClick={addToCart} disabled={isProductInCart}>
+    {isProductInCart ? 'Added to Cart' : 'ADD TO CART'}
+  </button>
+</div>
+
+
+
           {addingToCart && <p className="text-success">Adding to Cart...</p>}
         </div>
       </div>

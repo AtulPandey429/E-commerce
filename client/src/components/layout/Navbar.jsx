@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
@@ -25,8 +26,8 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <Link to="/" className="navbar-brand">
-          🛒E-Commerce
+        <Link to="/" className="navbar-brand text-success">
+          🛒SHOPIFY-X
         </Link>
         <button
           className="navbar-toggler"

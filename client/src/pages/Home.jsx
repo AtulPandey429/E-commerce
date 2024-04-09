@@ -1,5 +1,4 @@
 import  { useState, useEffect, useCallback } from 'react';
-import ecommerce from '../../public/images/ecommerce.jpg';
 import Layout from '../components/Layout/Layout';
 import axios from 'axios';
 import { toast } from 'react-toastify';
