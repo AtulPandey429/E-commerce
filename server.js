@@ -23,7 +23,7 @@ const __dirname = dirname(__filename);
 
 
   //*Set static folder up in production
-  app.use(express.static('../client/dist'));
+  app.use(express.static('/client/dist'));
 
   app.get('*', (req,res) => res.sendFile(path.resolve(__dirname, 'client', 'build','index.html')));
 
